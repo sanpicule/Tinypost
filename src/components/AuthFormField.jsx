@@ -69,7 +69,7 @@ const AuthFormField = ({
 AuthFormField.propTypes = {
   email: PropTypes.string,
   password: PropTypes.string,
-  showPassword: PropTypes.string,
+  showPassword: PropTypes.bool,
   setEmail: PropTypes.func,
   setPassword: PropTypes.func,
   handleClickShowPassword: PropTypes.func,
