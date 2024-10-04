@@ -18,11 +18,12 @@ import ListItemText from '@mui/material/ListItemText'
 import { styled, useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import * as React from 'react'
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
+import SimpleBottomNavigation from '@/components/BottomNavigation'
 import useAuth from '@/hooks/useAuth'
-import { supabase } from '@lib/supabase'
+import useResponsive from '@/hooks/useResponsive'
 
 const drawerWidth = 240
 
@@ -110,9 +111,11 @@ const drawerMenus = [
 ]
 
 export default function LayoutAppBar() {
-  const { isLogin, userInfo } = useAuth()
+  const [open, setOpen] = useState(false)
+
+  const { mobile } = useResponsive()
+  const { isLogin, userInfo, handleLogOut } = useAuth()
   const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
   const location = useLocation()
   const splitPath = location.pathname.substring(1)
 
@@ -122,18 +125,6 @@ export default function LayoutAppBar() {
 
   const handleDrawerClose = () => {
     setOpen(false)
-  }
-
-  const navigate = useNavigate()
-  const handleLogOut = async () => {
-    const { error } = await supabase.auth.signOut()
-
-    if (error) {
-      // Snackbarなどの対応が必要
-      console.log(error)
-    } else {
-      navigate('/login')
-    }
   }
 
   return (
@@ -148,101 +139,107 @@ export default function LayoutAppBar() {
               sx={{ paddingX: '10px' }}
             >
               <Toolbar>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={handleDrawerOpen}
-                  edge="start"
-                  sx={[
-                    {
-                      marginRight: 5,
-                    },
-                    open && { display: 'none' },
-                  ]}
-                >
-                  <MenuIcon />
-                </IconButton>
+                {!mobile && (
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    sx={[
+                      {
+                        marginRight: 5,
+                      },
+                      open && { display: 'none' },
+                    ]}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                )}
                 <Typography variant="h6" noWrap component="div">
                   TinyPost
                 </Typography>
               </Toolbar>
               {isLogin && (
                 <Stack direction={'row'} alignItems={'center'} gap={2}>
-                  <Typography>{userInfo.full_name}</Typography>
+                  {!mobile && <Typography>{userInfo.full_name}</Typography>}
                   <Avatar alt="ユーザアイコン画像" src={userInfo.picture} />
                 </Stack>
               )}
             </Stack>
           </AppBar>
-          <Drawer variant="permanent" open={open}>
-            <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'rtl' ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </DrawerHeader>
-            <Divider />
-            <List sx={{ paddingX: '10px' }}>
-              {drawerMenus.map((menu) => (
-                <ListItem
-                  key={menu.title}
-                  disablePadding
-                  sx={{
-                    display: 'block',
-                    backgroundColor: splitPath === menu.icon ? '#8080806b' : '',
-                    borderRadius: '10px',
-                  }}
-                >
-                  <ListItemButton
-                    component={Link}
-                    to={`/${menu.icon}`}
-                    onClick={() => handleDrawerClose()}
-                    sx={[
-                      { minHeight: 48, px: 2.5, borderRadius: '10px' },
-                      open
-                        ? { justifyContent: 'initial' }
-                        : { justifyContent: 'center' },
-                    ]}
+          {!mobile && (
+            <Drawer variant="permanent" open={open}>
+              <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === 'rtl' ? (
+                    <ChevronRightIcon />
+                  ) : (
+                    <ChevronLeftIcon />
+                  )}
+                </IconButton>
+              </DrawerHeader>
+              <Divider />
+              <List sx={{ paddingX: '10px' }}>
+                {drawerMenus.map((menu) => (
+                  <ListItem
+                    key={menu.title}
+                    disablePadding
+                    sx={{
+                      display: 'block',
+                      backgroundColor:
+                        splitPath === menu.icon ? '#8080806b' : '',
+                      borderRadius: '10px',
+                    }}
                   >
-                    <ListItemIcon
+                    <ListItemButton
+                      component={Link}
+                      to={`/${menu.icon}`}
+                      onClick={() => handleDrawerClose()}
                       sx={[
-                        { minWidth: 0, justifyContent: 'center' },
-                        open ? { mr: 3 } : { mr: 'auto' },
+                        { minHeight: 48, px: 2.5, borderRadius: '10px' },
+                        open
+                          ? { justifyContent: 'initial' }
+                          : { justifyContent: 'center' },
                       ]}
                     >
-                      {menu.icon === 'dashboard' ? (
-                        <SpaceDashboardIcon />
-                      ) : (
-                        <SettingsIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={menu.title}
-                      sx={[open ? { opacity: 1 } : { opacity: 0 }]}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-              {open && (
-                <ListItem>
-                  <Button
-                    color="error"
-                    variant="outlined"
-                    sx={{ width: '100%' }}
-                    onClick={handleLogOut}
-                  >
-                    ログアウト
-                  </Button>
-                </ListItem>
-              )}
-            </List>
-          </Drawer>
+                      <ListItemIcon
+                        sx={[
+                          { minWidth: 0, justifyContent: 'center' },
+                          open ? { mr: 3 } : { mr: 'auto' },
+                        ]}
+                      >
+                        {menu.icon === 'dashboard' ? (
+                          <SpaceDashboardIcon />
+                        ) : (
+                          <SettingsIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={menu.title}
+                        sx={[open ? { opacity: 1 } : { opacity: 0 }]}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+                {open && (
+                  <ListItem>
+                    <Button
+                      color="error"
+                      variant="outlined"
+                      sx={{ width: '100%' }}
+                      onClick={handleLogOut}
+                    >
+                      ログアウト
+                    </Button>
+                  </ListItem>
+                )}
+              </List>
+            </Drawer>
+          )}
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <DrawerHeader />
             <Outlet />
+            {mobile && <SimpleBottomNavigation />}
           </Box>
         </Box>
       )}
