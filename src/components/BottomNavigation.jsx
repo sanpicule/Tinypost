@@ -7,19 +7,23 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import useAuth from '@/hooks/useAuth'
+import LogoutDialog from './LogoutDialog'
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = useState(0)
+  const [dialogOpen, setDialogOpen] = useState(false)
   const navigate = useNavigate()
-  const { handleLogOut } = useAuth()
   const handleClick = (e, newValue) => {
     setValue(newValue)
     if (newValue === 'logout') {
-      handleLogOut()
+      handleClickDialogOpen()
     } else {
       navigate(`/${newValue}`)
     }
+  }
+
+  const handleClickDialogOpen = () => {
+    setDialogOpen(true)
   }
 
   return (
@@ -44,11 +48,12 @@ export default function SimpleBottomNavigation() {
           icon={<ExitToAppIcon color="error" />}
           sx={{
             '& .MuiBottomNavigationAction-label': {
-              color: 'error.main', // ラベルの色をerrorカラーに設定
+              color: 'error.main',
             },
           }}
         />
       </BottomNavigation>
+      <LogoutDialog open={dialogOpen} setOpen={setDialogOpen} />
     </Paper>
   )
 }

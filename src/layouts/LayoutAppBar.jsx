@@ -22,6 +22,7 @@ import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 
 import SimpleBottomNavigation from '@/components/BottomNavigation'
+import LogoutDialog from '@/components/LogoutDialog'
 import useAuth from '@/hooks/useAuth'
 import useResponsive from '@/hooks/useResponsive'
 
@@ -114,10 +115,15 @@ export default function LayoutAppBar() {
   const [open, setOpen] = useState(false)
 
   const { mobile } = useResponsive()
-  const { isLogin, userInfo, handleLogOut } = useAuth()
+  const { isLogin, userInfo } = useAuth()
   const theme = useTheme()
   const location = useLocation()
   const splitPath = location.pathname.substring(1)
+  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const handleClickDialogOpen = () => {
+    setDialogOpen(true)
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -227,7 +233,7 @@ export default function LayoutAppBar() {
                       color="error"
                       variant="outlined"
                       sx={{ width: '100%' }}
-                      onClick={handleLogOut}
+                      onClick={handleClickDialogOpen}
                     >
                       ログアウト
                     </Button>
@@ -241,6 +247,7 @@ export default function LayoutAppBar() {
             <Outlet />
             {mobile && <SimpleBottomNavigation />}
           </Box>
+          <LogoutDialog open={dialogOpen} setOpen={setDialogOpen} />
         </Box>
       )}
     </>
