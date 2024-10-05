@@ -6,6 +6,7 @@ import { supabase } from '@lib/supabase.js'
 const useAuth = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [logoutLoading, setLogoutLoading] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const navigate = useNavigate()
 
@@ -32,6 +33,7 @@ const useAuth = () => {
   }, [])
 
   const handleLogOut = async () => {
+    setLogoutLoading(true)
     const { error } = await supabase.auth.signOut()
 
     if (error) {
@@ -39,10 +41,11 @@ const useAuth = () => {
       console.log(error)
     } else {
       navigate('/login')
+      setLogoutLoading(false)
     }
   }
 
-  return { isLogin, loading, userInfo, handleLogOut }
+  return { isLogin, loading, logoutLoading, userInfo, handleLogOut }
 }
 
 export default useAuth
