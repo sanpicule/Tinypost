@@ -1,4 +1,5 @@
-import { Box, Container, Stack, Link } from '@mui/material'
+import { Box, Container, Stack } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 import AuthFormField from '@/components/AuthFormField'
 import AuthGoogleButton from '@/components/AuthGoogleButton'
@@ -44,10 +45,10 @@ export default function Login() {
           />
           <AuthLoadingButton buttonContent={'ログイン'} />
           <Stack sx={{ mt: 2, gap: 1 }}>
-            <Link href="#" variant="body2">
+            <Link to="/forget" variant="body2">
               パスワードを忘れた場合
             </Link>
-            <Link href="./register" variant="body2">
+            <Link to="/signup" variant="body2">
               {'アカウントをお持ちでない方はこちら'}
             </Link>
           </Stack>
