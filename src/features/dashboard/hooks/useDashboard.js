@@ -7,6 +7,7 @@ const useDashboard = () => {
   const [page, setPage] = useState(0)
   const [posts, setPosts] = useState([])
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [isFetch, setIsFetch] = useState(true)
   const navigate = useNavigate()
   useEffect(() => {
     fetchPosts()
@@ -20,6 +21,7 @@ const useDashboard = () => {
     console.log(data)
     if (error) console.log('Error fetching posts:', error)
     else {
+      setIsFetch(false)
       setPosts(data)
     }
   }
@@ -49,6 +51,7 @@ const useDashboard = () => {
     page,
     posts,
     rowsPerPage,
+    isFetch,
     handleDeleteDialog,
     handleEditNavigate,
     handleRegisterNavigate,

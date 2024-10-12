@@ -1,4 +1,5 @@
 import { Stack } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
@@ -49,6 +50,7 @@ export default function CustomizedTables() {
     page,
     posts,
     rowsPerPage,
+    isFetch,
     handleDeleteDialog,
     handleEditNavigate,
     handleRegisterNavigate,
@@ -71,7 +73,10 @@ export default function CustomizedTables() {
     <Stack sx={{ gap: mobile ? 1 : 4 }}>
       <PageHeader pageTitle="記事管理" />
       <AddPostButton navigate={handleRegisterNavigate} />
-      {posts.length > 0 ? (
+
+      {isFetch ? (
+        <CircularProgress sx={{ mx: 'auto', mt: '20%' }} />
+      ) : posts.length > 0 ? (
         <Paper sx={{ p: mobile ? 0 : 2 }}>
           <TablePagination
             rowsPerPageOptions={[5]}
@@ -90,9 +95,7 @@ export default function CustomizedTables() {
               sx={{ minWidth: mobile ? 0 : 700, tableLayout: 'fixed' }}
               aria-label="customized table"
             >
-              <TableCustomHeader
-                StyledTableCell={StyledTableCell}
-              ></TableCustomHeader>
+              <TableCustomHeader StyledTableCell={StyledTableCell} />
               <TableCustomBody
                 posts={posts}
                 page={page}
