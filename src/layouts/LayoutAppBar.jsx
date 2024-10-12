@@ -53,8 +53,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }))
 
@@ -242,11 +240,14 @@ export default function LayoutAppBar() {
               </List>
             </Drawer>
           )}
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Box
+            component="main"
+            sx={{ flexGrow: 1, p: 3, width: '90%', height: '100%' }}
+          >
             <DrawerHeader />
             <Outlet />
-            {mobile && <SimpleBottomNavigation />}
           </Box>
+          {mobile && <SimpleBottomNavigation />}
           <LogoutDialog open={dialogOpen} setOpen={setDialogOpen} />
         </Box>
       )}
