@@ -7,12 +7,14 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import useFormatDate from '@/hooks/useFormatDate'
 
 import useDeleteDialog from '../hooks/useDeleteDialog'
 
 export default function DeleteDialog() {
+  const location = useLocation()
   const { formatDate } = useFormatDate()
   const data = location.state?.data
   const { open, handleClose } = useDeleteDialog()
