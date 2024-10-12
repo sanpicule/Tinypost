@@ -20,6 +20,11 @@ const useCustomTheme = () => {
         light: '#80D8FF',
         dark: '#103B4C',
       },
+      secondary: {
+        main: '#ffd740',
+        light: '#fff176',
+        dark: '#fbc02d',
+      },
       error: {
         main: '#BF3C30',
         light: '#FFCCAA',
