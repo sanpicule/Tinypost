@@ -21,9 +21,9 @@ const useCustomTheme = () => {
         dark: '#103B4C',
       },
       secondary: {
-        main: '#ffd740',
+        main: '#F4A460',
         light: '#fff176',
-        dark: '#fbc02d',
+        dark: '#F4A410',
       },
       error: {
         main: '#BF3C30',
