@@ -8,7 +8,7 @@ const useDeleteDialog = () => {
 
   useEffect(() => {
     setOpen(location.state?.open)
-  }, [])
+  }, [location.state?.open])
 
   const handleClose = () => {
     setOpen(false)

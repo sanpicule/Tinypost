@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider } from '@mui/material'
 
-import useCustomTheme from '../public/useCustomTheme.js'
+import useCustomTheme from '@public/useCustomTheme.js'
 
 import RouteProvider from './routes/AppRouters.jsx'
 

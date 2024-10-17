@@ -1,9 +1,21 @@
-import { useMediaQuery } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
+import { useState } from 'react'
 
 const useCustomTheme = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const theme = createTheme({
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            transition: 'background-color 0.5s ease, color 0.5s ease',
+          },
+        },
+      },
+    },
+    colorSchemes: {
+      dark: true,
+    },
     breakpoints: {
       values: {
         xs: 0,
@@ -14,26 +26,38 @@ const useCustomTheme = () => {
       },
     },
     palette: {
-      mode: prefersDarkMode ? 'dark' : 'light',
+      mode: isDarkMode ? 'dark' : 'light',
+      background: {
+        cooking: '#ef6c00',
+        news: '#2196f3',
+      },
       primary: {
         main: '#307B8C',
         light: '#80D8FF',
         dark: '#103B4C',
       },
       secondary: {
-        main: '#ffd740',
+        main: '#F4A460',
         light: '#fff176',
-        dark: '#fbc02d',
+        dark: '#F4A410',
       },
       error: {
         main: '#BF3C30',
         light: '#FFCCAA',
         dark: '#9F2C20',
       },
+      success: {
+        main: '#1de9b6',
+      },
     },
   })
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode)
+  }
   return {
     theme,
+    isDarkMode,
+    toggleDarkMode,
   }
 }
 

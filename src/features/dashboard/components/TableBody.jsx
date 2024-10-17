@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 
 import useFormatDate from '@/hooks/useFormatDate'
 import useResponsive from '@/hooks/useResponsive'
+import useCustomTheme from '@public/useCustomTheme'
 
 const TableCustomBody = ({
   posts,
@@ -27,6 +28,7 @@ const TableCustomBody = ({
 }) => {
   const { formatDate } = useFormatDate()
   const { mobile, tab } = useResponsive()
+  const { theme } = useCustomTheme()
   return (
     <TableBody>
       {posts
@@ -38,7 +40,9 @@ const TableCustomBody = ({
                 <Brightness1Icon
                   sx={{
                     width: '10px',
-                    color: post.public ? '#1de9b6' : '#BF3C30',
+                    color: post.public
+                      ? theme.palette.success.main
+                      : theme.palette.error.main,
                   }}
                 />
                 {!mobile && (
@@ -66,7 +70,7 @@ const TableCustomBody = ({
                     <Chip
                       label="お知らせ"
                       sx={{
-                        backgroundColor: '#2196f3',
+                        backgroundColor: 'background.news',
                         color: '#fff',
                       }}
                     />
@@ -74,7 +78,7 @@ const TableCustomBody = ({
                     <Chip
                       label="料理教室"
                       sx={{
-                        backgroundColor: '#ef6c00',
+                        backgroundColor: 'background.cooking',
                         color: '#fff',
                       }}
                     />

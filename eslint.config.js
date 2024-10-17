@@ -38,6 +38,7 @@ export default [
           map: [
             ['@', resolve(__dirname, './src')],
             ['@lib', resolve(__dirname, './lib')],
+            ['@public', resolve(__dirname, './public')],
           ],
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },

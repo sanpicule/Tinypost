@@ -19,9 +19,10 @@ import { styled, useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import SimpleBottomNavigation from '@/components/BottomNavigation'
+import ChangeColorTheme from '@/components/ChangeColorTheme'
 import LogoutDialog from '@/components/LogoutDialog'
 import useAuth from '@/hooks/useAuth'
 import useResponsive from '@/hooks/useResponsive'
@@ -115,8 +116,6 @@ export default function LayoutAppBar() {
   const { mobile } = useResponsive()
   const { isLogin, userInfo } = useAuth()
   const theme = useTheme()
-  const location = useLocation()
-  const splitPath = location.pathname.substring(1)
   const [dialogOpen, setDialogOpen] = useState(false)
 
   const handleClickDialogOpen = () => {
@@ -165,6 +164,7 @@ export default function LayoutAppBar() {
               </Toolbar>
               {isLogin && (
                 <Stack direction={'row'} alignItems={'center'} gap={2}>
+                  <ChangeColorTheme />
                   {!mobile && <Typography>{userInfo.full_name}</Typography>}
                   <Avatar alt="ユーザアイコン画像" src={userInfo.picture} />
                 </Stack>
@@ -190,8 +190,6 @@ export default function LayoutAppBar() {
                     disablePadding
                     sx={{
                       display: 'block',
-                      backgroundColor:
-                        splitPath === menu.icon ? '#8080806b' : '',
                       borderRadius: '10px',
                     }}
                   >

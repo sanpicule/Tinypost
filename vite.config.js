@@ -13,6 +13,7 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, './src'),
       '@lib': resolve(__dirname, './lib'),
+      '@public': resolve(__dirname, './public'),
     },
   },
 })
