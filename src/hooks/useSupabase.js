@@ -1,13 +1,21 @@
 import { supabase } from '@lib/supabase'
 
 const useSupabase = () => {
+  // ログインユーザの取得
+  const getLoginUser = async () => {
+    const { data } = await supabase.auth.getUser()
+    const user = data.user
+    return user
+  }
   // 全件取得
   const fetchPosts = async () => {
     try {
+      const user = await getLoginUser()
       const { data, error } = await supabase
         .from('news')
         .select('*')
         .order('created_at', { ascending: false })
+        .eq('user_id', user.id)
       if (error) throw error
       return { data, error: null }
     } catch (error) {
@@ -39,9 +47,10 @@ const useSupabase = () => {
   // 記事作成
   const insertPost = async (newsData) => {
     try {
+      const user = await getLoginUser()
       const { data, error } = await supabase
         .from('news')
-        .insert(newsData)
+        .insert({ ...newsData, email: user.email })
         .single()
       if (error) throw error
       return { data, error: null }
