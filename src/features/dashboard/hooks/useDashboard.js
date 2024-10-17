@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { supabase } from '@lib/supabase'
+import useSupabase from '@/hooks/useSupabase'
 
 const useDashboard = () => {
   const [page, setPage] = useState(0)
@@ -9,22 +9,19 @@ const useDashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [isFetch, setIsFetch] = useState(true)
   const navigate = useNavigate()
+  const { fetchPosts } = useSupabase()
   useEffect(() => {
-    fetchPosts()
-  }, [])
-
-  const fetchPosts = async () => {
-    const { data, error } = await supabase
-      .from('news')
-      .select('*')
-      .order('created_at', { ascending: false })
-    console.log(data)
-    if (error) console.log('Error fetching posts:', error)
-    else {
-      setIsFetch(false)
-      setPosts(data)
+    const getPosts = async () => {
+      const { data, error } = await fetchPosts()
+      if (data) {
+        setPosts(data)
+        setIsFetch(false)
+      } else {
+        console.error(error)
+      }
     }
-  }
+    getPosts()
+  }, [fetchPosts])
 
   const handleDeleteDialog = (id) => {
     const selectedRow = posts.find((row) => row.id === id)
