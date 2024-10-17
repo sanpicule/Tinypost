@@ -21,7 +21,7 @@ const useDashboard = () => {
       }
     }
     getPosts()
-  }, [fetchPosts])
+  }, [])
 
   const handleDeleteDialog = (id) => {
     const selectedRow = posts.find((row) => row.id === id)
