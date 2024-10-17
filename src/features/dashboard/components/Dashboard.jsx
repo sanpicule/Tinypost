@@ -10,12 +10,12 @@ import TableRow from '@mui/material/TableRow'
 import { Outlet } from 'react-router-dom'
 
 import DataMessage from '@/components/DataMessage'
+import PageHeader from '@/components/PageHeader'
 import useResponsive from '@/hooks/useResponsive'
 
 import useDashboard from '../hooks/useDashboard'
 
 import AddPostButton from './AddPostButton'
-import PageHeader from './PageHeader'
 import TableCustomBody from './TableBody'
 import TableCustomHeader from './TableHeader'
 

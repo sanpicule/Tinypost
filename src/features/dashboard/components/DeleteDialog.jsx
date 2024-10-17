@@ -17,7 +17,7 @@ export default function DeleteDialog() {
   const location = useLocation()
   const { formatDate } = useFormatDate()
   const data = location.state?.data
-  const { open, handleClose } = useDeleteDialog()
+  const { open, loading, handleClose, handleDelete } = useDeleteDialog()
 
   return (
     <Dialog
@@ -50,10 +50,10 @@ export default function DeleteDialog() {
       <DialogActions>
         <Button onClick={handleClose}>キャンセル</Button>
         <LoadingButton
-          onClick={handleClose}
+          onClick={() => handleDelete(data.id)}
           variant="contained"
           color="error"
-          loading={false}
+          loading={loading}
         >
           削除
         </LoadingButton>
