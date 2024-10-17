@@ -59,6 +59,18 @@ const useSupabase = () => {
     }
   }
 
+  // 記事更新用
+  const updatePost = async (id, updateData) => {
+    try {
+      const { error } = await supabase
+        .from('news')
+        .update(updateData)
+        .eq('id', id)
+      if (error) throw error
+    } catch (error) {
+      return { data: null, error }
+    }
+  }
   // 記事削除
   const deletePost = async (id) => {
     try {
@@ -78,6 +90,7 @@ const useSupabase = () => {
     fetchPosts,
     uploadImage,
     insertPost,
+    updatePost,
     deletePost,
   }
 }

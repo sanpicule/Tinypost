@@ -9,7 +9,7 @@ const useDataForm = () => {
   const navigate = useNavigate()
   const [previewImage, setPreviewImage] = useState(null)
   const [loading, setLoading] = useState(false)
-  const { uploadImage, insertPost } = useSupabase()
+  const { uploadImage, updatePost, insertPost } = useSupabase()
   const location = useLocation()
   const data = location.state?.data
 
@@ -54,9 +54,16 @@ const useDataForm = () => {
       }
 
       if (id) {
-        // #TODO 未実装
+        console.log(data, image_url)
+        await updatePost(id, {
+          title: data.title,
+          body: data.body,
+          public: data.public,
+          label: data.label,
+          image_url: image_url,
+        })
         setLoading(false)
-        console.log('編集')
+        navigate('/dashboard')
       } else {
         await insertPost({
           title: data.title,
