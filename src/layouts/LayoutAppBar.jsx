@@ -184,7 +184,15 @@ export default function LayoutAppBar() {
             </Stack>
           </AppBar>
           {!mobile && (
-            <Drawer variant="permanent" open={open}>
+            <Drawer
+              variant="permanent"
+              open={open}
+              sx={{
+                '& .MuiDrawer-paper': {
+                  backgroundColor: '#97BDC5',
+                },
+              }}
+            >
               <DrawerHeader>
                 <IconButton onClick={handleDrawerClose}>
                   {theme.direction === 'rtl' ? (

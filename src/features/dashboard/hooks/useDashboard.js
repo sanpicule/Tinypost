@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import useSupabase from '@/hooks/useSupabase'
 
@@ -9,6 +9,8 @@ const useDashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [isFetch, setIsFetch] = useState(true)
   const navigate = useNavigate()
+  const location = useLocation()
+  const pathname = location.pathname
   const { fetchPosts } = useSupabase()
   useEffect(() => {
     const getPosts = async () => {
@@ -21,7 +23,7 @@ const useDashboard = () => {
       }
     }
     getPosts()
-  }, [])
+  }, [pathname])
 
   const handleDeleteDialog = (id) => {
     const selectedRow = posts.find((row) => row.id === id)
