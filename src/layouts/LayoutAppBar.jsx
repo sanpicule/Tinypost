@@ -19,7 +19,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import SimpleBottomNavigation from '@/components/BottomNavigation'
 import ChangeColorTheme from '@/components/ChangeColorTheme'
@@ -115,6 +115,7 @@ export default function LayoutAppBar() {
 
   const { mobile } = useResponsive()
   const { isLogin, userInfo } = useAuth()
+  const navigate = useNavigate()
   const theme = useTheme()
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -166,7 +167,18 @@ export default function LayoutAppBar() {
                 <Stack direction={'row'} alignItems={'center'} gap={2}>
                   <ChangeColorTheme />
                   {!mobile && <Typography>{userInfo.full_name}</Typography>}
-                  <Avatar alt="ユーザアイコン画像" src={userInfo.picture} />
+                  <Avatar
+                    alt="ユーザアイコン画像"
+                    src={userInfo.picture}
+                    onClick={() => navigate('/profile')}
+                    sx={{
+                      cursor: 'pointer',
+                      transition: '0.3s',
+                      ':hover': {
+                        opacity: '70%',
+                      },
+                    }}
+                  />
                 </Stack>
               )}
             </Stack>
