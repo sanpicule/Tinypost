@@ -22,7 +22,6 @@ const useSupabase = () => {
       return { data: null, error }
     }
   }
-
   // 画像をアップロードして公開URLを取得する関数
   const uploadImage = async (file) => {
     const fileExt = file.name.split('.').pop()
@@ -43,7 +42,6 @@ const useSupabase = () => {
 
     return urlData.publicUrl
   }
-
   // 記事作成
   const insertPost = async (newsData) => {
     try {
@@ -58,7 +56,6 @@ const useSupabase = () => {
       return { data: null, error }
     }
   }
-
   // 記事更新用
   const updatePost = async (id, updateData) => {
     try {
@@ -85,6 +82,27 @@ const useSupabase = () => {
       return { data: null, error }
     }
   }
+  // プロフィールの更新
+  const updateProfile = async (updates) => {
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      const { error } = await supabase
+        .from('users')
+        .update(updates)
+        .eq('id', session?.user?.id)
+
+      if (error) {
+        throw error
+      }
+
+      return { error: null }
+    } catch (error) {
+      console.error('Error updating user profile:', error)
+      return { error }
+    }
+  }
 
   return {
     fetchPosts,
@@ -92,6 +110,7 @@ const useSupabase = () => {
     insertPost,
     updatePost,
     deletePost,
+    updateProfile,
   }
 }
 

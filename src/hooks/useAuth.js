@@ -1,51 +1,66 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import useLoginInfo from '@/store/useLoginInfo'
 import { supabase } from '@lib/supabase.js'
 
 const useAuth = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [loading, setLoading] = useState(true)
   const [logoutLoading, setLogoutLoading] = useState(false)
-  const [userInfo, setUserInfo] = useState({})
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const checkSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
-      setIsLogin(!!session?.user)
-      console.log(session?.user.user_metadata)
-      setUserInfo(session?.user.user_metadata)
-      setLoading(false)
-    }
-    checkSession()
+  const { setUser, clearUser } = useLoginInfo()
 
+  const checkSession = async () => {
     const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setIsLogin(!!session?.user)
-      setLoading(false)
-    })
+      data: { session },
+    } = await supabase.auth.getSession()
 
-    return () => subscription.unsubscribe()
-  }, [])
+    const user = session?.user
+    setIsLogin(!!user)
+    if (user) {
+      const res = await getProfile(user.id)
+      setUser(res)
+    }
+    setLoading(false)
+  }
+
+  const getProfile = async (id) => {
+    try {
+      if (!id) {
+        throw new Error('User ID is undefined')
+      }
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', id)
+        .single()
+
+      if (error) {
+        throw error
+      }
+      return data
+    } catch (error) {
+      console.error('Error loading user profile:', error.message)
+      return null
+    }
+  }
 
   const handleLogOut = async () => {
     setLogoutLoading(true)
     const { error } = await supabase.auth.signOut()
 
     if (error) {
-      // Snackbarなどの対応が必要
-      console.log(error)
+      console.error(error)
     } else {
+      clearUser()
       navigate('/login')
       setLogoutLoading(false)
     }
   }
 
-  return { isLogin, loading, logoutLoading, userInfo, handleLogOut }
+  return { isLogin, loading, logoutLoading, handleLogOut, checkSession }
 }
 
 export default useAuth

@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText'
 import { styled, useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import SimpleBottomNavigation from '@/components/BottomNavigation'
@@ -26,6 +26,7 @@ import ChangeColorTheme from '@/components/ChangeColorTheme'
 import LogoutDialog from '@/components/LogoutDialog'
 import useAuth from '@/hooks/useAuth'
 import useResponsive from '@/hooks/useResponsive'
+import useLoginInfo from '@/store/useLoginInfo'
 
 const drawerWidth = 240
 
@@ -112,12 +113,17 @@ const drawerMenus = [
 
 export default function LayoutAppBar() {
   const [open, setOpen] = useState(false)
+  const userInfo = useLoginInfo((state) => state.user)
 
   const { mobile } = useResponsive()
-  const { isLogin, userInfo } = useAuth()
+  const { isLogin, checkSession } = useAuth()
   const navigate = useNavigate()
   const theme = useTheme()
   const [dialogOpen, setDialogOpen] = useState(false)
+
+  useEffect(() => {
+    checkSession()
+  }, [])
 
   const handleClickDialogOpen = () => {
     setDialogOpen(true)
@@ -166,10 +172,10 @@ export default function LayoutAppBar() {
               {isLogin && (
                 <Stack direction={'row'} alignItems={'center'} gap={2}>
                   <ChangeColorTheme />
-                  {!mobile && <Typography>{userInfo.full_name}</Typography>}
+                  {!mobile && <Typography>{userInfo?.full_name}</Typography>}
                   <Avatar
                     alt="ユーザアイコン画像"
-                    src={userInfo.picture}
+                    src={userInfo?.avatar_url}
                     onClick={() => navigate('/profile')}
                     sx={{
                       cursor: 'pointer',
