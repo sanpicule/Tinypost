@@ -24,6 +24,7 @@ const Profile = () => {
     previewImage,
     control,
     errors,
+    loading,
     handleSubmit,
     onSubmit,
     handleImageChange,
@@ -46,7 +47,7 @@ const Profile = () => {
             }}
           />
           <Controller
-            name="image"
+            name="avatar_url"
             control={control}
             render={({ field }) => (
               <Box>
@@ -87,7 +88,7 @@ const Profile = () => {
         </Box>
 
         <Controller
-          name="name"
+          name="full_name"
           control={control}
           rules={{ required: '表示名は必須です' }}
           render={({ field }) => (
@@ -97,8 +98,8 @@ const Profile = () => {
               variant="outlined"
               fullWidth
               margin="normal"
-              error={!!errors.name}
-              helperText={errors.name?.message}
+              error={!!errors.full_name}
+              helperText={errors.full_name?.message}
             />
           )}
         />
@@ -115,6 +116,8 @@ const Profile = () => {
               margin="normal"
               error={!!errors.email}
               helperText={errors.email?.message}
+              aria-readonly
+              disabled={true}
             />
           )}
         />
@@ -131,7 +134,7 @@ const Profile = () => {
             type="submit"
             variant="contained"
             color="secondary"
-            // loading={loading}
+            loading={loading}
           >
             保存
           </LoadingButton>

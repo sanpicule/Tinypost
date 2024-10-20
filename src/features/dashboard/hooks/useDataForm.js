@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import useSupabase from '@/hooks/useSupabase'
+import useSnackbarOpen from '@/store/useSnackbarOpen'
 
 const useDataForm = () => {
   const { id } = useParams()
@@ -12,6 +13,7 @@ const useDataForm = () => {
   const { uploadImage, updatePost, insertPost } = useSupabase()
   const location = useLocation()
   const data = location.state?.data
+  const { openSnackbar } = useSnackbarOpen()
 
   const {
     control,
@@ -53,31 +55,34 @@ const useDataForm = () => {
         image_url = previewImage
       }
 
+      const postData = {
+        title: data.title,
+        body: data.body,
+        public: data.public,
+        label: data.label,
+        image_url: image_url,
+      }
+
       if (id) {
-        console.log(data, image_url)
-        await updatePost(id, {
-          title: data.title,
-          body: data.body,
-          public: data.public,
-          label: data.label,
-          image_url: image_url,
-        })
+        // 更新の場合
+        await updatePost(id, postData)
         setLoading(false)
         navigate('/dashboard')
+        openSnackbar('投稿を更新しました', 'success')
       } else {
-        await insertPost({
-          title: data.title,
-          body: data.body,
-          public: data.public,
-          label: data.label,
-          image_url: image_url,
-        })
+        // 新規作成の場合
+        await insertPost(postData)
         setLoading(false)
         navigate('/dashboard')
+        openSnackbar('新しい投稿を作成しました', 'success')
       }
     } catch (error) {
       console.error('Error submitting form:', error)
       setLoading(false)
+      openSnackbar(
+        id ? '投稿の更新に失敗しました' : '投稿の作成に失敗しました',
+        'error',
+      )
     }
   }
   return {
