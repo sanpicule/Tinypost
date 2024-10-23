@@ -27,9 +27,13 @@ const useCustomTheme = () => {
     },
     palette: {
       mode: isDarkMode ? 'dark' : 'light',
+      text: {
+        main: '#fff',
+      },
       background: {
         cooking: '#ef6c00',
         news: '#2196f3',
+        lightBlue: '#97BDC5',
       },
       primary: {
         main: '#307B8C',
@@ -48,6 +52,7 @@ const useCustomTheme = () => {
       },
       success: {
         main: '#1de9b6',
+        dark: '#4caf50',
       },
     },
   })

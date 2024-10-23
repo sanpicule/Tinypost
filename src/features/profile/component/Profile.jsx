@@ -43,7 +43,7 @@ const Profile = () => {
               width: mobile ? '100px' : '180px',
               height: mobile ? '100px' : '180px',
               zIndex: 1,
-              backgroundColor: '#97BDC5',
+              backgroundColor: 'background.lightBlue',
             }}
           />
           <Controller
@@ -75,11 +75,11 @@ const Profile = () => {
                       bgcolor: 'primary.main',
                       zIndex: 10,
                       '&:hover': {
-                        backgroundColor: '#97BDC5',
+                        backgroundColor: 'background.lightBlue',
                       },
                     }}
                   >
-                    <EditIcon sx={{ color: '#fff' }} />
+                    <EditIcon sx={{ color: 'text.main' }} />
                   </IconButton>
                 </label>
               </Box>

@@ -195,7 +195,7 @@ export default function LayoutAppBar() {
               open={open}
               sx={{
                 '& .MuiDrawer-paper': {
-                  backgroundColor: '#97BDC5',
+                  backgroundColor: 'background.lightBlue',
                 },
               }}
             >
