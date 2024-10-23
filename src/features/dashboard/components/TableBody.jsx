@@ -71,7 +71,6 @@ const TableCustomBody = ({
                       label="お知らせ"
                       sx={{
                         backgroundColor: 'background.news',
-                        color: '#fff',
                       }}
                     />
                   ) : (
@@ -79,7 +78,6 @@ const TableCustomBody = ({
                       label="料理教室"
                       sx={{
                         backgroundColor: 'background.cooking',
-                        color: '#fff',
                       }}
                     />
                   )}

@@ -1,17 +1,19 @@
 import { Snackbar } from '@mui/material'
 
 import useSnackbarOpen from '@/store/useSnackbarOpen'
+import useCustomTheme from '@public/useCustomTheme'
 
 const CustomSnackbar = () => {
   const { isOpen, message, closeSnackbar, type } = useSnackbarOpen()
+  const { theme } = useCustomTheme()
   const getSnackbarColor = (type) => {
     switch (type) {
       case 'success':
-        return '#4caf50'
+        return theme.palette.success.dark
       case 'error':
-        return '#f44336'
+        return theme.palette.error.main
       default:
-        return '#4caf50'
+        return theme.palette.success.dark
     }
   }
   return (
@@ -26,8 +28,7 @@ const CustomSnackbar = () => {
       }}
       sx={{
         '& .MuiSnackbarContent-root': {
-          backgroundColor: getSnackbarColor(type), // typeに応じて色を変更
-          color: '#fff',
+          backgroundColor: getSnackbarColor(type),
         },
       }}
     />

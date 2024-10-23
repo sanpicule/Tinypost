@@ -38,7 +38,7 @@ const ChangeColorTheme = () => {
         {mode === 'dark' ? (
           <DarkModeIcon />
         ) : (
-          <LightModeIcon sx={{ color: '#fff' }} />
+          <LightModeIcon sx={{ color: 'text.main' }} />
         )}
       </IconButton>
       <Menu
