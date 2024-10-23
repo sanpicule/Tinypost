@@ -17,7 +17,7 @@ const AuthGoogleButton = () => {
             width: 40,
           }}
           alt="Googleアイコン"
-          src={'../../public/images/googleIcon.png'}
+          src={'/images/googleIcon.png'}
         />
       }
       sx={{
