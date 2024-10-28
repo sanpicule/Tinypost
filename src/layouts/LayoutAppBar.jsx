@@ -161,9 +161,20 @@ export default function LayoutAppBar() {
                     <MenuIcon />
                   </IconButton>
                 )}
-                <Typography variant="h6" noWrap component="div">
-                  TinyPost
-                </Typography>
+                <Stack direction={'row'} alignItems={'center'} gap={2}>
+                  <Box
+                    component="img"
+                    sx={{
+                      height: 50,
+                      width: 50,
+                    }}
+                    alt="The house from the offer."
+                    src="../../public/images/favion.ico"
+                  />
+                  <Typography variant="h6" noWrap component="div">
+                    TinyPost
+                  </Typography>
+                </Stack>
               </Toolbar>
               {isLogin && (
                 <Stack direction={'row'} alignItems={'center'} gap={2}>
