@@ -169,7 +169,7 @@ export default function LayoutAppBar() {
                       width: 50,
                     }}
                     alt="The house from the offer."
-                    src="../../public/images/favion.ico"
+                    src="/images/favion.ico"
                   />
                   <Typography variant="h6" noWrap component="div">
                     TinyPost
