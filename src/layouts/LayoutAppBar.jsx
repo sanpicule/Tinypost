@@ -1,7 +1,6 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import MenuIcon from '@mui/icons-material/Menu'
-import SettingsIcon from '@mui/icons-material/Settings'
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
 import { Avatar, Button, Stack } from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
@@ -106,10 +105,7 @@ const Drawer = styled(MuiDrawer, {
   ],
 }))
 
-const drawerMenus = [
-  { title: '記事一覧', icon: 'dashboard' },
-  { title: '設定', icon: 'settings' },
-]
+const drawerMenus = [{ title: '記事一覧', icon: 'dashboard' }]
 
 export default function LayoutAppBar() {
   const [open, setOpen] = useState(false)
@@ -236,11 +232,7 @@ export default function LayoutAppBar() {
                           open ? { mr: 3 } : { mr: 'auto' },
                         ]}
                       >
-                        {menu.icon === 'dashboard' ? (
-                          <SpaceDashboardIcon />
-                        ) : (
-                          <SettingsIcon />
-                        )}
+                        <SpaceDashboardIcon />
                       </ListItemIcon>
                       <ListItemText
                         primary={menu.title}
