@@ -37,7 +37,6 @@ const RouteProvider = () => {
           </Route>
           <Route path="/dashboard/edit/:id" element={<DataForm />} />
           <Route path="/dashboard/register" element={<DataForm />} />
-          <Route path="/settings" element={<div>設定画面です</div>} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

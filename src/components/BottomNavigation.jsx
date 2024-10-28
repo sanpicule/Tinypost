@@ -1,5 +1,4 @@
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
-import SettingsIcon from '@mui/icons-material/Settings'
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
 import { Paper } from '@mui/material'
 import BottomNavigation from '@mui/material/BottomNavigation'
@@ -36,11 +35,6 @@ export default function SimpleBottomNavigation() {
           label="記事一覧"
           value="dashboard"
           icon={<SpaceDashboardIcon />}
-        />
-        <BottomNavigationAction
-          label="設定"
-          value="settings"
-          icon={<SettingsIcon />}
         />
         <BottomNavigationAction
           label="ログアウト"
