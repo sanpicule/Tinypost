@@ -42,7 +42,7 @@ const Preview = () => {
               src={data.post[0]?.image_url}
               alt="Preview"
               style={{
-                width: mobile ? '100%' : '60%',
+                width: mobile ? '100%' : '40%',
                 borderRadius: '10px',
               }}
             />
