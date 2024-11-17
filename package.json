@@ -13,7 +13,9 @@
     "dev:production": "vite --mode production",
     "dev:test": "vite --mode test",
     "build:production": "vite build --mode production",
-    "build:test": "vite build --mode test"
+    "build:test": "vite build --mode test",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -34,6 +36,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/ui": "^2.1.5",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -46,6 +49,7 @@
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
     "vite": "^5.4.1",
-    "vite-jsconfig-paths": "^2.0.1"
+    "vite-jsconfig-paths": "^2.0.1",
+    "vitest": "^2.1.5"
   }
 }
