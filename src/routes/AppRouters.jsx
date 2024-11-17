@@ -10,6 +10,7 @@ import DataForm from '@/features/dashboard/components/DataForm'
 import DeleteDialog from '@/features/dashboard/components/DeleteDialog'
 import ForgetPassword from '@/features/fogetPassword/components/ForgetPassword'
 import Login from '@/features/login/components/Login'
+import Preview from '@/features/preview/components/Preview'
 import Profile from '@/features/profile/component/Profile'
 import Signup from '@/features/signup/components/Signup'
 import LayoutAppBar from '@/layouts/LayoutAppBar'
@@ -35,6 +36,7 @@ const RouteProvider = () => {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="delete/:id" element={<DeleteDialog />} />
           </Route>
+          <Route path="/dashboard/preview/:id" element={<Preview />} />
           <Route path="/dashboard/edit/:id" element={<DataForm />} />
           <Route path="/dashboard/register" element={<DataForm />} />
           <Route path="/profile" element={<Profile />} />

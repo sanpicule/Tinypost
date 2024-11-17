@@ -1,3 +1,4 @@
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
@@ -13,6 +14,7 @@ import {
   Typography,
 } from '@mui/material'
 import { Controller } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import PageHeader from '@/components/PageHeader'
 
@@ -33,7 +35,20 @@ const DataForm = () => {
   return (
     <>
       <PageHeader pageTitle={id ? '記事編集' : '記事登録'} />
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 10 }}>
+      {id && (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Link to={`/dashboard/preview/${id}`}>
+            <Button
+              variant="outlined"
+              sx={{ mt: 4 }}
+              startIcon={<RemoveRedEyeIcon />}
+            >
+              プレビューを見る
+            </Button>
+          </Link>
+        </Box>
+      )}
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 4 }}>
         <Controller
           name="public"
           control={control}

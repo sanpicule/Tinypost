@@ -1,16 +1,8 @@
 import Brightness1Icon from '@mui/icons-material/Brightness1'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import {
-  Chip,
-  IconButton,
-  Stack,
-  TableBody,
-  Tooltip,
-  Typography,
-} from '@mui/material'
+import { Chip, Stack, TableBody, Tooltip, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
+import DotsMenu from '@/components/DotsMenu'
 import useFormatDate from '@/hooks/useFormatDate'
 import useResponsive from '@/hooks/useResponsive'
 import useCustomTheme from '@public/useCustomTheme'
@@ -23,11 +15,9 @@ const TableCustomBody = ({
   TruncatedCell,
   StyledTableRow,
   StyledTableCell,
-  handleEditNavigate,
-  handleDeleteDialog,
 }) => {
   const { formatDate } = useFormatDate()
-  const { mobile, tab } = useResponsive()
+  const { mobile } = useResponsive()
   const { theme } = useCustomTheme()
   return (
     <TableBody>
@@ -88,19 +78,7 @@ const TableCustomBody = ({
               </>
             )}
             <StyledTableCell align="left">
-              <Tooltip title="編集">
-                <IconButton onClick={() => handleEditNavigate(post.id)}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="削除">
-                <IconButton
-                  onClick={() => handleDeleteDialog(post.id)}
-                  sx={{ ml: tab ? 0 : 2 }}
-                >
-                  <DeleteIcon color="error" />
-                </IconButton>
-              </Tooltip>
+              <DotsMenu posts={posts} post={post} />
             </StyledTableCell>
           </StyledTableRow>
         ))}
@@ -116,8 +94,6 @@ TableCustomBody.propTypes = {
   TruncatedCell: PropTypes.elementType.isRequired,
   StyledTableRow: PropTypes.elementType.isRequired,
   StyledTableCell: PropTypes.elementType.isRequired,
-  handleEditNavigate: PropTypes.func,
-  handleDeleteDialog: PropTypes.func,
 }
 
 export default TableCustomBody

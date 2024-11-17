@@ -51,8 +51,6 @@ export default function CustomizedTables() {
     posts,
     rowsPerPage,
     isFetch,
-    handleDeleteDialog,
-    handleEditNavigate,
     handleRegisterNavigate,
     handleChangePage,
     handleChangeRowsPerPage,
@@ -101,8 +99,6 @@ export default function CustomizedTables() {
                 page={page}
                 rowsPerPage={rowsPerPage}
                 truncateText={truncateText}
-                handleDeleteDialog={handleDeleteDialog}
-                handleEditNavigate={handleEditNavigate}
                 StyledTableRow={StyledTableRow}
                 TruncatedCell={TruncatedCell}
                 StyledTableCell={StyledTableCell}
