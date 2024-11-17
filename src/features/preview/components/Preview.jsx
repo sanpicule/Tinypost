@@ -22,6 +22,7 @@ const Preview = () => {
           fontFamily: 'Noto Serif JP, serif',
           paddingBottom: '80px',
           marginTop: '24px',
+          paddingLeft: !mobile && '10%',
         }}
       >
         <Typography
