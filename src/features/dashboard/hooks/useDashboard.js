@@ -25,15 +25,6 @@ const useDashboard = () => {
     getPosts()
   }, [pathname])
 
-  const handleDeleteDialog = (id) => {
-    const selectedRow = posts.find((row) => row.id === id)
-    navigate(`./delete/${id}`, { state: { data: selectedRow, open: true } })
-  }
-  const handleEditNavigate = (id) => {
-    const selectedRow = posts.find((row) => row.id === id)
-    navigate(`./edit/${id}`, { state: { data: selectedRow, open: true } })
-  }
-
   const handleRegisterNavigate = () => {
     navigate('./register')
   }
@@ -51,8 +42,6 @@ const useDashboard = () => {
     posts,
     rowsPerPage,
     isFetch,
-    handleDeleteDialog,
-    handleEditNavigate,
     handleRegisterNavigate,
     handleChangePage,
     handleChangeRowsPerPage,

@@ -22,6 +22,21 @@ const useSupabase = () => {
       return { data: null, error }
     }
   }
+  // 1件取得
+  const fetchPost = async (id) => {
+    try {
+      const user = await getLoginUser()
+      const { data, error } = await supabase
+        .from('news')
+        .select('*')
+        .eq('id', id)
+        .eq('user_id', user.id)
+      if (error) throw error
+      return { data, error: null }
+    } catch (error) {
+      return { data: null, error }
+    }
+  }
   // 画像をアップロードして公開URLを取得する関数
   const uploadImage = async (file) => {
     const fileExt = file.name.split('.').pop()
@@ -106,6 +121,7 @@ const useSupabase = () => {
 
   return {
     fetchPosts,
+    fetchPost,
     uploadImage,
     insertPost,
     updatePost,

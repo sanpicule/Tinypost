@@ -31,7 +31,7 @@ const TableHeader = ({ StyledTableCell }) => {
             </StyledTableCell>
           </>
         )}
-        <StyledTableCell align="left" sx={{ width: '10%' }}></StyledTableCell>
+        <StyledTableCell align="left" sx={{ width: '5%' }}></StyledTableCell>
       </TableRow>
     </TableHead>
   )
