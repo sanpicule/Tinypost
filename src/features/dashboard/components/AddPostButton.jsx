@@ -1,30 +1,19 @@
-import { Button, Stack } from '@mui/material'
-import PropTypes from 'prop-types'
+import AddIcon from '@mui/icons-material/Add'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
-const AddPostButton = ({ navigate }) => {
+const AddPostButton = () => {
+  const navigate = useNavigate()
   return (
-    <Stack
-      direction={'row'}
-      justifyContent={'flex-end'}
-      sx={{
-        width: '100%',
-        gap: 1,
-        marginLeft: 'auto',
-      }}
+    <Button
+      sx={{ borderRadius: '5px', width: '100%' }}
+      variant="contained"
+      onClick={() => navigate('./register')}
+      startIcon={<AddIcon />}
     >
-      <Button
-        sx={{ borderRadius: '20px' }}
-        variant="outlined"
-        onClick={() => navigate()}
-      >
-        ＋ 新規作成
-      </Button>
-    </Stack>
+      新規作成
+    </Button>
   )
-}
-
-AddPostButton.propTypes = {
-  navigate: PropTypes.func,
 }
 
 export default AddPostButton

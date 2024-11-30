@@ -52,7 +52,6 @@ export default function CustomizedTables() {
     posts,
     rowsPerPage,
     isFetch,
-    handleRegisterNavigate,
     handleChangePage,
     handleChangeRowsPerPage,
   } = useDashboard()
@@ -71,8 +70,12 @@ export default function CustomizedTables() {
   return (
     <Stack sx={{ gap: mobile ? 1 : 4 }}>
       <PageHeader pageTitle="記事管理" />
-      <AddPostButton navigate={handleRegisterNavigate} />
-      {isFetch && <CircularProgress sx={{ mx: 'auto', mt: '20%' }} />}
+      {posts.length !== 0 && (
+        <Box sx={{ mt: 2, marginLeft: 'auto' }}>
+          <AddPostButton />
+        </Box>
+      )}
+      {isFetch && <CircularProgress sx={{ mx: 'auto', mt: 4 }} />}
       {posts.length > 0 &&
         (!mobile ? (
           <Paper sx={{ p: mobile ? 0 : 2 }}>
@@ -108,12 +111,13 @@ export default function CustomizedTables() {
             <Outlet />
           </Paper>
         ) : (
-          <Stack sx={{ marginBottom: '80px', marginTop: '50px', gap: 2 }}>
+          <Stack sx={{ marginBottom: '80px', marginTop: '20px', gap: 2 }}>
             {posts.map((post) => (
               <Box key={post.id}>
                 <PostCard posts={posts} post={post} />
               </Box>
             ))}
+            <Outlet />
           </Stack>
         ))}
       {posts.length === 0 && !isFetch && <DataMessage />}
