@@ -36,7 +36,11 @@ const PostCard = ({ posts, post }) => {
         component="img"
         alt="green iguana"
         height="180"
-        image={`${post.image_url}`}
+        image={
+          post.image_url
+            ? `${post.image_url}`
+            : '../../../../public/images/noImage.jpg'
+        }
       />
       <CardContent>
         {post.label === 1 ? (

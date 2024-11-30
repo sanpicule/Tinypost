@@ -1,26 +1,32 @@
-import InfoIcon from '@mui/icons-material/Info'
-import { Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 
-import useCustomTheme from '@public/useCustomTheme'
+import AddPostButton from '@/features/dashboard/components/AddPostButton'
+import useResponsive from '@/hooks/useResponsive'
 
 const DataMessage = () => {
-  const { theme } = useCustomTheme()
+  const { mobile } = useResponsive()
   return (
     <Stack
-      direction={'row'}
       alignItems={'center'}
       sx={{
         gap: 2,
         p: 2,
-        border: `1px solid ${theme.palette.error.main}`,
-        borderRadius: '10px',
-        mt: 2,
+        mt: 8,
       }}
     >
-      <InfoIcon color="error" />
-      <Typography color="error">
-        表示できるデータがありません。記事を作成してください
-      </Typography>
+      {mobile ? (
+        <Typography sx={{ color: 'gray', textAlign: 'center' }}>
+          表示できる記事がありません。 <br></br>
+          下記ボタンより新規作成してください。
+        </Typography>
+      ) : (
+        <Typography sx={{ color: 'gray' }}>
+          表示できる記事がありません。 下記ボタンより新規作成してください。
+        </Typography>
+      )}
+      <Box sx={{ mt: 2, width: '150px' }}>
+        <AddPostButton />
+      </Box>
     </Stack>
   )
 }
