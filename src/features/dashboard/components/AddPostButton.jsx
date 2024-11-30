@@ -12,8 +12,12 @@ const AddPostButton = ({ navigate }) => {
         marginLeft: 'auto',
       }}
     >
-      <Button variant="contained" color="secondary" onClick={() => navigate()}>
-        ＋ 記事を作成する
+      <Button
+        sx={{ borderRadius: '20px' }}
+        variant="outlined"
+        onClick={() => navigate()}
+      >
+        ＋ 新規作成
       </Button>
     </Stack>
   )
