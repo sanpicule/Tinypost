@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
@@ -16,6 +16,7 @@ import useResponsive from '@/hooks/useResponsive'
 import useDashboard from '../hooks/useDashboard'
 
 import AddPostButton from './AddPostButton'
+import PostCard from './PostCard'
 import TableCustomBody from './TableBody'
 import TableCustomHeader from './TableHeader'
 
@@ -71,45 +72,51 @@ export default function CustomizedTables() {
     <Stack sx={{ gap: mobile ? 1 : 4 }}>
       <PageHeader pageTitle="記事管理" />
       <AddPostButton navigate={handleRegisterNavigate} />
-
-      {isFetch ? (
-        <CircularProgress sx={{ mx: 'auto', mt: '20%' }} />
-      ) : posts.length > 0 ? (
-        <Paper sx={{ p: mobile ? 0 : 2 }}>
-          <TablePagination
-            rowsPerPageOptions={[5]}
-            component="div"
-            count={posts.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-          <TableContainer
-            component={Paper}
-            sx={{ height: mobile ? 350 : '100%' }}
-          >
-            <Table
-              sx={{ minWidth: mobile ? 0 : 700, tableLayout: 'fixed' }}
-              aria-label="customized table"
+      {isFetch && <CircularProgress sx={{ mx: 'auto', mt: '20%' }} />}
+      {posts.length > 0 &&
+        (!mobile ? (
+          <Paper sx={{ p: mobile ? 0 : 2 }}>
+            <TablePagination
+              rowsPerPageOptions={[5]}
+              component="div"
+              count={posts.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+            <TableContainer
+              component={Paper}
+              sx={{ height: mobile ? 350 : '100%' }}
             >
-              <TableCustomHeader StyledTableCell={StyledTableCell} />
-              <TableCustomBody
-                posts={posts}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                truncateText={truncateText}
-                StyledTableRow={StyledTableRow}
-                TruncatedCell={TruncatedCell}
-                StyledTableCell={StyledTableCell}
-              />
-            </Table>
-          </TableContainer>
-          <Outlet />
-        </Paper>
-      ) : (
-        <DataMessage />
-      )}
+              <Table
+                sx={{ minWidth: mobile ? 0 : 700, tableLayout: 'fixed' }}
+                aria-label="customized table"
+              >
+                <TableCustomHeader StyledTableCell={StyledTableCell} />
+                <TableCustomBody
+                  posts={posts}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  truncateText={truncateText}
+                  StyledTableRow={StyledTableRow}
+                  TruncatedCell={TruncatedCell}
+                  StyledTableCell={StyledTableCell}
+                />
+              </Table>
+            </TableContainer>
+            <Outlet />
+          </Paper>
+        ) : (
+          <Stack sx={{ marginBottom: '80px', marginTop: '50px', gap: 2 }}>
+            {posts.map((post) => (
+              <Box key={post.id}>
+                <PostCard posts={posts} post={post} />
+              </Box>
+            ))}
+          </Stack>
+        ))}
+      {posts.length === 0 && !isFetch && <DataMessage />}
     </Stack>
   )
 }
