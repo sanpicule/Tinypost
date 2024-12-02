@@ -25,17 +25,22 @@ const PostCard = ({ posts, post }) => {
   const formatDate = (isoString) => {
     const date = new Date(isoString)
     const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0') // 月は0ベースなので+1
+    const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     return `${year}/${month}/${day}`
   }
 
   return (
-    <Card sx={{ borderRadius: '10px' }}>
+    <Card
+      sx={{
+        borderRadius: '20px',
+        boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.2)',
+      }}
+    >
       <CardMedia
         component="img"
         alt="green iguana"
-        height="180"
+        height="130"
         image={
           post.image_url
             ? `${post.image_url}`
@@ -91,7 +96,9 @@ const PostCard = ({ posts, post }) => {
             <DotsMenu posts={posts} post={post} />
           </Stack>
         </Stack>
-        <Typography sx={{ mt: 2 }}>{truncateText(post.body)}</Typography>
+        <Typography sx={{ fontSize: '12px' }}>
+          {truncateText(post.body)}
+        </Typography>
       </CardContent>
     </Card>
   )

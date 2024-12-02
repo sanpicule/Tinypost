@@ -16,6 +16,7 @@ import useResponsive from '@/hooks/useResponsive'
 import useDashboard from '../hooks/useDashboard'
 
 import AddPostButton from './AddPostButton'
+import Filter from './Filter'
 import PostCard from './PostCard'
 import TableCustomBody from './TableBody'
 import TableCustomHeader from './TableHeader'
@@ -52,6 +53,7 @@ export default function CustomizedTables() {
     posts,
     rowsPerPage,
     isFetch,
+    setIsFetch,
     handleChangePage,
     handleChangeRowsPerPage,
   } = useDashboard()
@@ -70,11 +72,10 @@ export default function CustomizedTables() {
   return (
     <Stack sx={{ gap: mobile ? 1 : 4 }}>
       <PageHeader pageTitle="記事管理" />
-      {posts.length !== 0 && (
-        <Box sx={{ mt: 2, marginLeft: 'auto' }}>
-          <AddPostButton />
-        </Box>
-      )}
+      <Box sx={{ mt: 2, marginLeft: 'auto' }}>
+        <AddPostButton />
+      </Box>
+      <Filter isFetch={isFetch} setIsFetch={setIsFetch}></Filter>
       {isFetch && <CircularProgress sx={{ mx: 'auto', mt: 4 }} />}
       {posts.length > 0 &&
         (!mobile ? (
