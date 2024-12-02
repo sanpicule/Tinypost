@@ -37,6 +37,21 @@ const useSupabase = () => {
       return { data: null, error }
     }
   }
+  // 絞り込み条件に紐づくデータ取得
+  const fetchFilterPosts = async (item) => {
+    try {
+      const user = await getLoginUser()
+      const { data, error } = await supabase
+        .from('news')
+        .select('*')
+        .eq('label', item)
+        .eq('user_id', user.id)
+      if (error) throw error
+      return { data, error: null }
+    } catch (error) {
+      return { data: null, error }
+    }
+  }
   // 画像をアップロードして公開URLを取得する関数
   const uploadImage = async (file) => {
     const fileExt = file.name.split('.').pop()
@@ -122,6 +137,7 @@ const useSupabase = () => {
   return {
     fetchPosts,
     fetchPost,
+    fetchFilterPosts,
     uploadImage,
     insertPost,
     updatePost,
