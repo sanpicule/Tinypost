@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 
-const Filter = ({ isFetch, setIsFetch }) => {
+const Filter = ({ isFetch, setIsFetch, setPosts }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const searchLabel = searchParams.get('label')
   const [filterItem, setFilterItem] = useState(searchLabel || 0)
 
   const handleChange = (e) => {
+    setPosts([])
     setFilterItem(e.target.value)
     setIsFetch(!isFetch)
   }
@@ -51,6 +52,7 @@ const Filter = ({ isFetch, setIsFetch }) => {
 Filter.propTypes = {
   isFetch: PropTypes.bool,
   setIsFetch: PropTypes.func,
+  setPosts: PropTypes.func,
 }
 
 export default Filter

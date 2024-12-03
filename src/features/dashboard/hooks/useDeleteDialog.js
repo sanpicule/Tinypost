@@ -28,7 +28,7 @@ const useDeleteDialog = () => {
         return
       }
 
-      navigate('/dashboard')
+      navigate(-1)
       openSnackbar('投稿を削除しました', 'success')
     } catch (error) {
       setLoading(false)
