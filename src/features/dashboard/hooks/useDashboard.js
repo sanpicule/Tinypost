@@ -15,7 +15,6 @@ const useDashboard = () => {
   const pathname = location.pathname
   const { fetchPosts, fetchFilterPosts } = useSupabase()
   useEffect(() => {
-    setPosts([])
     const getPosts = async () => {
       const { data, error } = await fetchPosts()
       if (data) {
@@ -36,7 +35,8 @@ const useDashboard = () => {
     }
     if (searchLabel == 0) {
       getPosts()
-    } else {
+    }
+    if (searchLabel == 1 || searchLabel == 2) {
       getFilterPosts(searchLabel)
     }
   }, [pathname, searchParams])
@@ -59,6 +59,7 @@ const useDashboard = () => {
     rowsPerPage,
     isFetch,
     setIsFetch,
+    setPosts,
     handleRegisterNavigate,
     handleChangePage,
     handleChangeRowsPerPage,

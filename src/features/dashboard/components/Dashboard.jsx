@@ -54,6 +54,7 @@ export default function CustomizedTables() {
     rowsPerPage,
     isFetch,
     setIsFetch,
+    setPosts,
     handleChangePage,
     handleChangeRowsPerPage,
   } = useDashboard()
@@ -75,7 +76,7 @@ export default function CustomizedTables() {
       <Box sx={{ mt: 2, marginLeft: 'auto' }}>
         <AddPostButton />
       </Box>
-      <Filter isFetch={isFetch} setIsFetch={setIsFetch}></Filter>
+      <Filter isFetch={isFetch} setIsFetch={setIsFetch} setPosts={setPosts} />
       {isFetch && <CircularProgress sx={{ mx: 'auto', mt: 4 }} />}
       {posts.length > 0 &&
         (!mobile ? (
@@ -109,7 +110,6 @@ export default function CustomizedTables() {
                 />
               </Table>
             </TableContainer>
-            <Outlet />
           </Paper>
         ) : (
           <Stack sx={{ marginBottom: '80px', marginTop: '20px', gap: 2 }}>
@@ -118,10 +118,10 @@ export default function CustomizedTables() {
                 <PostCard posts={posts} post={post} />
               </Box>
             ))}
-            <Outlet />
           </Stack>
         ))}
       {posts.length === 0 && !isFetch && <DataMessage />}
+      <Outlet />
     </Stack>
   )
 }
