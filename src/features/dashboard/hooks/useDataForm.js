@@ -18,6 +18,8 @@ const useDataForm = () => {
   const {
     control,
     handleSubmit,
+    getValues,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -95,6 +97,8 @@ const useDataForm = () => {
     navigate,
     handleSubmit,
     handleImageChange,
+    getValues,
+    watch,
   }
 }
 

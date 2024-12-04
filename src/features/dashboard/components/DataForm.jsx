@@ -20,6 +20,8 @@ import PageHeader from '@/components/PageHeader'
 
 import useDataForm from '../hooks/useDataForm'
 
+import MarkdownEditor from './MarkDown'
+
 const DataForm = () => {
   const {
     id,
@@ -31,6 +33,8 @@ const DataForm = () => {
     navigate,
     handleSubmit,
     handleImageChange,
+    getValues,
+    watch,
   } = useDataForm()
   return (
     <>
@@ -75,25 +79,11 @@ const DataForm = () => {
             />
           )}
         />
-        <Controller
-          name="body"
+        <MarkdownEditor
           control={control}
-          rules={{
-            required: '本文は必須です',
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="本文"
-              variant="outlined"
-              multiline
-              maxRows={10}
-              fullWidth
-              margin="normal"
-              error={!!errors.body}
-              helperText={errors.body?.message}
-            />
-          )}
+          errors={errors}
+          getValues={getValues}
+          watch={watch}
         />
         <Controller
           name="label"
