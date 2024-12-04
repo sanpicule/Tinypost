@@ -20,8 +20,8 @@ import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
-import SimpleBottomNavigation from '@/components/BottomNavigation'
 import ChangeColorTheme from '@/components/ChangeColorTheme'
+import LogoutButton from '@/components/LogoutButton'
 import LogoutDialog from '@/components/LogoutDialog'
 import useAuth from '@/hooks/useAuth'
 import useResponsive from '@/hooks/useResponsive'
@@ -161,30 +161,42 @@ export default function LayoutAppBar() {
                     <MenuIcon />
                   </IconButton>
                 )}
-                <Stack direction={'row'} alignItems={'center'} gap={2}>
+                <Stack
+                  direction={'row'}
+                  alignItems={'center'}
+                  gap={1}
+                  onClick={() => navigate('./dashboard?label=0')}
+                  sx={{ cursor: 'pointer' }}
+                >
                   <Box
                     component="img"
                     sx={{
-                      height: 50,
-                      width: 50,
+                      height: mobile ? 35 : 50,
+                      width: mobile ? 35 : 50,
                     }}
                     alt="The house from the offer."
                     src="/images/favion.ico"
                   />
-                  <Typography variant="h6" noWrap component="div">
+                  <Typography sx={{ fontSize: mobile ? '18px' : '24px' }}>
                     TinyPost
                   </Typography>
                 </Stack>
               </Toolbar>
               {isLogin && (
-                <Stack direction={'row'} alignItems={'center'} gap={2}>
+                <Stack
+                  direction={'row'}
+                  alignItems={'center'}
+                  gap={mobile ? 1 : 2}
+                >
+                  <LogoutButton />
                   <ChangeColorTheme />
-                  {!mobile && <Typography>{userInfo?.full_name}</Typography>}
                   <Avatar
                     alt="ユーザアイコン画像"
                     src={userInfo?.avatar_url}
                     onClick={() => navigate('/profile')}
                     sx={{
+                      height: mobile ? 35 : 50,
+                      width: mobile ? 35 : 50,
                       cursor: 'pointer',
                       transition: '0.3s',
                       ':hover': {
@@ -274,7 +286,6 @@ export default function LayoutAppBar() {
             <DrawerHeader />
             <Outlet />
           </Box>
-          {mobile && <SimpleBottomNavigation />}
           <LogoutDialog open={dialogOpen} setOpen={setDialogOpen} />
         </Box>
       )}
