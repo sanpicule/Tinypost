@@ -5,11 +5,12 @@ import useSupabase from '@/hooks/useSupabase'
 
 const usePreview = () => {
   const { id } = useParams()
-  const [isFetch, setIsFetch] = useState(true)
+  const [isFetch, setIsFetch] = useState(false)
   const [post, setPost] = useState({})
   const { fetchPost } = useSupabase()
 
   useEffect(() => {
+    setIsFetch(true)
     const getPosts = async () => {
       const { data, error } = await fetchPost(id)
       if (data) {
