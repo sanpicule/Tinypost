@@ -1,4 +1,4 @@
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
@@ -16,11 +16,10 @@ import {
 import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import Editor from '@/components/Editor'
 import PageHeader from '@/components/PageHeader'
 
 import useDataForm from '../hooks/useDataForm'
-
-import MarkdownEditor from './MarkDown'
 
 const DataForm = () => {
   const {
@@ -33,9 +32,8 @@ const DataForm = () => {
     navigate,
     handleSubmit,
     handleImageChange,
-    getValues,
-    watch,
   } = useDataForm()
+
   return (
     <>
       <PageHeader pageTitle={id ? '記事編集' : '記事登録'} />
@@ -45,9 +43,9 @@ const DataForm = () => {
             <Button
               variant="outlined"
               sx={{ mt: 4 }}
-              startIcon={<RemoveRedEyeIcon />}
+              startIcon={<PlayCircleOutlineIcon />}
             >
-              プレビューを見る
+              プレビュー
             </Button>
           </Link>
         </Box>
@@ -79,12 +77,27 @@ const DataForm = () => {
             />
           )}
         />
-        <MarkdownEditor
+        <Controller
+          name="body"
           control={control}
-          errors={errors}
-          getValues={getValues}
-          watch={watch}
+          rules={{ required: '本文は必須です' }}
+          render={({ field }) => (
+            <>
+              <Editor value={field.value} onChange={field.onChange} />
+              {errors.body && (
+                <Typography color="error" variant="caption">
+                  {errors.body.message}
+                </Typography>
+              )}
+            </>
+          )}
         />
+        {/* <Editor
+          setValue={setValue}
+          initialContent={data?.body}
+          setError={setError}
+          errors={errors}
+        /> */}
         <Controller
           name="label"
           control={control}
@@ -119,7 +132,7 @@ const DataForm = () => {
                 }}
               />
               <label htmlFor="raised-button-file">
-                <Button variant="contained" component="span">
+                <Button variant="contained" component="span" color="secondary">
                   画像をアップロードする
                 </Button>
               </label>
@@ -147,7 +160,7 @@ const DataForm = () => {
           <LoadingButton
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             loading={loading}
           >
             {id ? '保存' : '作成'}

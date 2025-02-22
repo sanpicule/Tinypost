@@ -133,7 +133,7 @@ const Profile = () => {
           <LoadingButton
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             loading={loading}
           >
             保存

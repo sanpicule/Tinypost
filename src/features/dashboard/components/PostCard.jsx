@@ -15,13 +15,6 @@ import useCustomTheme from '@public/useCustomTheme'
 const PostCard = ({ posts, post }) => {
   const { theme } = useCustomTheme()
 
-  const truncateText = (text) => {
-    if (text.length <= 100) {
-      return text
-    }
-    return text.substring(0, 100) + '...'
-  }
-
   const formatDate = (isoString) => {
     const date = new Date(isoString)
     const year = date.getFullYear()
@@ -31,16 +24,11 @@ const PostCard = ({ posts, post }) => {
   }
 
   return (
-    <Card
-      sx={{
-        borderRadius: '20px',
-        boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.2)',
-      }}
-    >
+    <Card>
       <CardMedia
         component="img"
         alt="green iguana"
-        height="130"
+        height="100"
         image={
           post.image_url
             ? `${post.image_url}`
@@ -56,6 +44,7 @@ const PostCard = ({ posts, post }) => {
               borderColor: theme.palette.background.news,
               color: theme.palette.background.news,
             }}
+            size="small"
           />
         ) : (
           <Chip
@@ -65,6 +54,7 @@ const PostCard = ({ posts, post }) => {
               borderColor: theme.palette.background.cooking,
               color: theme.palette.background.cooking,
             }}
+            size="small"
           />
         )}
         <Stack direction="row" justifyContent="space-between" sx={{ mt: 2 }}>
@@ -91,14 +81,13 @@ const PostCard = ({ posts, post }) => {
           alignItems="center"
           sx={{ mt: 2 }}
         >
-          <Typography sx={{ fontWeight: 'bold' }}>{post.title}</Typography>
+          <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>
+            {post.title}
+          </Typography>
           <Stack alignItems="flex-end">
             <DotsMenu posts={posts} post={post} />
           </Stack>
         </Stack>
-        <Typography sx={{ fontSize: '12px' }}>
-          {truncateText(post.body)}
-        </Typography>
       </CardContent>
     </Card>
   )
