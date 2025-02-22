@@ -139,7 +139,6 @@ export default function LayoutAppBar() {
         <Box
           sx={{
             display: 'flex',
-            backgroundColor: '#f8f8f8',
             height: '100vh',
           }}
         >
