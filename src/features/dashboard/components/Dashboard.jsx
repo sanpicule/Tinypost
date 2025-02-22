@@ -9,7 +9,6 @@ import TableRow from '@mui/material/TableRow'
 import { Outlet } from 'react-router-dom'
 
 import DataMessage from '@/components/DataMessage'
-import DotsMenu from '@/components/DotsMenu'
 import PageHeader from '@/components/PageHeader'
 import useResponsive from '@/hooks/useResponsive'
 
@@ -73,7 +72,7 @@ export default function CustomizedTables() {
   return (
     <Stack sx={{ gap: mobile ? 1 : 4 }}>
       <PageHeader pageTitle="記事管理" />
-      <Box sx={{ mt: 2, marginLeft: 'auto' }}>
+      <Box sx={{ mt: mobile ? 0 : 2, marginLeft: 'auto' }}>
         <AddPostButton />
       </Box>
       <Filter isFetch={isFetch} setIsFetch={setIsFetch} setPosts={setPosts} />
@@ -113,15 +112,10 @@ export default function CustomizedTables() {
         <>
           {isFetch ? (
             <>
-              <Card sx={{ marginTop: '20px', borderRadius: '20px' }}>
+              <Card sx={{ marginTop: '20px' }}>
                 <Skeleton variant="rectangular" height={130} />
                 <CardContent>
-                  <Skeleton
-                    animation="wave"
-                    height={50}
-                    width={70}
-                    sx={{ borderRadius: '9999px' }}
-                  />
+                  <Skeleton animation="wave" height={50} width={70} />
                   <Stack
                     direction="row"
                     justifyContent="space-between"
@@ -137,9 +131,6 @@ export default function CustomizedTables() {
                     sx={{ mt: 2 }}
                   >
                     <Skeleton width={'80%'} />
-                    <Stack alignItems="flex-end">
-                      <DotsMenu />
-                    </Stack>
                   </Stack>
                   <Skeleton animation="wave" height={10} width={'100%'} />
                 </CardContent>
@@ -147,12 +138,7 @@ export default function CustomizedTables() {
               <Card sx={{ marginTop: '20px' }}>
                 <Skeleton variant="rectangular" height={130} />
                 <CardContent>
-                  <Skeleton
-                    animation="wave"
-                    height={50}
-                    width={70}
-                    sx={{ borderRadius: '9999px' }}
-                  />
+                  <Skeleton animation="wave" height={50} width={70} />
                   <Stack
                     direction="row"
                     justifyContent="space-between"
@@ -168,9 +154,6 @@ export default function CustomizedTables() {
                     sx={{ mt: 2 }}
                   >
                     <Skeleton width={'80%'} />
-                    <Stack alignItems="flex-end">
-                      <DotsMenu />
-                    </Stack>
                   </Stack>
                   <Skeleton animation="wave" height={10} width={'100%'} />
                 </CardContent>
@@ -178,12 +161,7 @@ export default function CustomizedTables() {
               <Card sx={{ marginTop: '20px' }}>
                 <Skeleton variant="rectangular" height={130} />
                 <CardContent>
-                  <Skeleton
-                    animation="wave"
-                    height={50}
-                    width={70}
-                    sx={{ borderRadius: '9999px' }}
-                  />
+                  <Skeleton animation="wave" height={50} width={70} />
                   <Stack
                     direction="row"
                     justifyContent="space-between"
@@ -199,9 +177,6 @@ export default function CustomizedTables() {
                     sx={{ mt: 2 }}
                   >
                     <Skeleton width={'80%'} />
-                    <Stack alignItems="flex-end">
-                      <DotsMenu />
-                    </Stack>
                   </Stack>
                   <Skeleton animation="wave" height={10} width={'100%'} />
                 </CardContent>

@@ -1,3 +1,4 @@
+import NotListedLocationIcon from '@mui/icons-material/NotListedLocation'
 import { Box, Stack, Typography } from '@mui/material'
 
 import AddPostButton from '@/features/dashboard/components/AddPostButton'
@@ -11,14 +12,17 @@ const DataMessage = () => {
       sx={{
         gap: 2,
         p: 2,
-        mt: 8,
+        mt: mobile ? 0 : 8,
       }}
     >
       {mobile ? (
-        <Typography sx={{ color: 'gray', textAlign: 'center' }}>
-          表示できる記事がありません。 <br></br>
-          下記ボタンより新規作成してください。
-        </Typography>
+        <>
+          <NotListedLocationIcon sx={{ fontSize: '50px' }} color="disabled" />
+          <Typography sx={{ color: 'gray', textAlign: 'center' }}>
+            表示できる記事がありません。 <br></br>
+            下記ボタンより新規作成してください。
+          </Typography>
+        </>
       ) : (
         <Typography sx={{ color: 'gray' }}>
           表示できる記事がありません。 下記ボタンより新規作成してください。

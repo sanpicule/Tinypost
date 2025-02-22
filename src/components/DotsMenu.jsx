@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { IconButton, Typography } from '@mui/material'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -64,16 +64,18 @@ const DotsMenu = ({ posts, post }) => {
         }}
       >
         <MenuItem onClick={handlePreviewNavigate} sx={{ gap: 1 }}>
-          <RemoveRedEyeIcon />
-          <Typography>プレビューを見る</Typography>
+          <PlayCircleOutlineIcon sx={{ fontSize: '16px' }} />
+          <Typography sx={{ fontSize: '12px' }}>プレビューを見る</Typography>
         </MenuItem>
         <MenuItem onClick={handleEditNavigate} sx={{ gap: 1 }}>
-          <EditIcon />
-          <Typography>編集する</Typography>
+          <EditIcon sx={{ fontSize: '16px' }} />
+          <Typography sx={{ fontSize: '12px' }}>編集する</Typography>
         </MenuItem>
         <MenuItem onClick={handleDeleteDialog} sx={{ gap: 1 }}>
-          <DeleteIcon color="error" />
-          <Typography color="error">削除する</Typography>
+          <DeleteIcon color="error" sx={{ fontSize: '16px' }} />
+          <Typography color="error" sx={{ fontSize: '12px' }}>
+            削除する
+          </Typography>
         </MenuItem>
       </Menu>
     </div>

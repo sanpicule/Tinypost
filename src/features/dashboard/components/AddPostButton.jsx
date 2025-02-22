@@ -1,17 +1,20 @@
 import AddIcon from '@mui/icons-material/Add'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
+import useResponsive from '@/hooks/useResponsive'
+
 const AddPostButton = () => {
+  const mobile = useResponsive()
   const navigate = useNavigate()
   return (
     <Button
-      sx={{ borderRadius: '5px', width: '100%' }}
-      variant="contained"
+      sx={{ borderRadius: '30px', width: '100%' }}
+      variant="outlined"
       onClick={() => navigate('./register')}
-      startIcon={<AddIcon />}
+      startIcon={mobile ? null : <AddIcon />}
     >
-      新規作成
+      <Typography sx={{ fontSize: '12px' }}>新規作成</Typography>
     </Button>
   )
 }

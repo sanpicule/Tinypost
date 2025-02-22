@@ -1,4 +1,4 @@
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
@@ -16,15 +16,15 @@ import {
 import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import Editor from '@/components/Editor'
 import PageHeader from '@/components/PageHeader'
 
 import useDataForm from '../hooks/useDataForm'
 
-import MarkdownEditor from './MarkDown'
-
 const DataForm = () => {
   const {
     id,
+    data,
     control,
     loading,
     errors,
@@ -32,9 +32,8 @@ const DataForm = () => {
     onSubmit,
     navigate,
     handleSubmit,
+    setValue,
     handleImageChange,
-    getValues,
-    watch,
   } = useDataForm()
   return (
     <>
@@ -45,9 +44,9 @@ const DataForm = () => {
             <Button
               variant="outlined"
               sx={{ mt: 4 }}
-              startIcon={<RemoveRedEyeIcon />}
+              startIcon={<PlayCircleOutlineIcon />}
             >
-              プレビューを見る
+              プレビュー
             </Button>
           </Link>
         </Box>
@@ -79,12 +78,7 @@ const DataForm = () => {
             />
           )}
         />
-        <MarkdownEditor
-          control={control}
-          errors={errors}
-          getValues={getValues}
-          watch={watch}
-        />
+        <Editor setValue={setValue} initialContent={data?.body}></Editor>
         <Controller
           name="label"
           control={control}
@@ -119,7 +113,7 @@ const DataForm = () => {
                 }}
               />
               <label htmlFor="raised-button-file">
-                <Button variant="contained" component="span">
+                <Button variant="contained" component="span" color="secondary">
                   画像をアップロードする
                 </Button>
               </label>
@@ -147,7 +141,7 @@ const DataForm = () => {
           <LoadingButton
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             loading={loading}
           >
             {id ? '保存' : '作成'}

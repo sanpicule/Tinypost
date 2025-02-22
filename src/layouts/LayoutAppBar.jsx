@@ -136,7 +136,13 @@ export default function LayoutAppBar() {
   return (
     <>
       {isLogin && (
-        <Box sx={{ display: 'flex' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            backgroundColor: '#f8f8f8',
+            height: '100vh',
+          }}
+        >
           <CssBaseline />
           <AppBar position="fixed" open={open}>
             <Stack
