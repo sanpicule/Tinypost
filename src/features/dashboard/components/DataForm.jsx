@@ -24,7 +24,6 @@ import useDataForm from '../hooks/useDataForm'
 const DataForm = () => {
   const {
     id,
-    data,
     control,
     loading,
     errors,
@@ -32,9 +31,9 @@ const DataForm = () => {
     onSubmit,
     navigate,
     handleSubmit,
-    setValue,
     handleImageChange,
   } = useDataForm()
+
   return (
     <>
       <PageHeader pageTitle={id ? '記事編集' : '記事登録'} />
@@ -78,7 +77,27 @@ const DataForm = () => {
             />
           )}
         />
-        <Editor setValue={setValue} initialContent={data?.body}></Editor>
+        <Controller
+          name="body"
+          control={control}
+          rules={{ required: '本文は必須です' }}
+          render={({ field }) => (
+            <>
+              <Editor value={field.value} onChange={field.onChange} />
+              {errors.body && (
+                <Typography color="error" variant="caption">
+                  {errors.body.message}
+                </Typography>
+              )}
+            </>
+          )}
+        />
+        {/* <Editor
+          setValue={setValue}
+          initialContent={data?.body}
+          setError={setError}
+          errors={errors}
+        /> */}
         <Controller
           name="label"
           control={control}

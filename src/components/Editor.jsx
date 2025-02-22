@@ -9,12 +9,12 @@ import useParseEditor from '@/hooks/useParseEditor'
 
 import RichEditorToolbar from './RichEditorToolbar'
 
-const Editor = ({ setValue, initialContent }) => {
+const Editor = ({ onChange, value }) => {
   const { parseContent } = useParseEditor()
 
   const editor = useEditor({
     extensions: [StarterKit, Link.configure({ openOnClick: true })],
-    content: parseContent(initialContent),
+    content: parseContent(value),
     editorProps: {
       attributes: {
         class: 'prose prose-base m-5 text-left',
@@ -23,16 +23,16 @@ const Editor = ({ setValue, initialContent }) => {
     },
     onUpdate: ({ editor }) => {
       const json = editor.getJSON()
-      setValue('body', json) // JSONを保存
+      onChange(json)
     },
   })
 
   // 初期データをエディターに反映
   useEffect(() => {
     if (editor) {
-      editor.commands.setContent(parseContent(initialContent))
+      editor.commands.setContent(parseContent(value))
     }
-  }, [editor, initialContent])
+  }, [editor, value])
 
   if (!editor) return null
 
@@ -43,10 +43,11 @@ const Editor = ({ setValue, initialContent }) => {
         sx={{
           borderTop: 1,
           borderColor: 'gray',
-          p: 2,
+          px: 2,
           height: '50vh',
           overflow: 'auto',
         }}
+        onClick={() => editor?.commands.focus()}
       >
         <EditorContent editor={editor} />
       </Box>
@@ -55,8 +56,8 @@ const Editor = ({ setValue, initialContent }) => {
 }
 
 Editor.propTypes = {
-  setValue: PropTypes.func.isRequired,
-  initialContent: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 }
 
 export default Editor

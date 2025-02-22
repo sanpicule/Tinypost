@@ -5,8 +5,7 @@ import { useCallback } from 'react'
 import { AiOutlineLink } from 'react-icons/ai'
 import {
   MdFormatBold,
-  MdFormatListNumbered,
-  MdFormatQuote,
+  MdFormatListBulleted,
   MdRedo,
   MdUndo,
 } from 'react-icons/md'
@@ -55,13 +54,7 @@ const RichEditorToolbar = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         sx={{ opacity: editor.isActive('bulletList') ? 1 : 0.5 }}
       >
-        <MdFormatListNumbered size={mobile ? 20 : 30} />
-      </Button>
-      <Button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        sx={{ opacity: editor.isActive('blockquote') ? 1 : 0.5 }}
-      >
-        <MdFormatQuote size={mobile ? 20 : 30} />
+        <MdFormatListBulleted size={mobile ? 20 : 30} />
       </Button>
       <Button
         onClick={setLink}

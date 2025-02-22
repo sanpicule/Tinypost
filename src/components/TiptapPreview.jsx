@@ -83,7 +83,9 @@ const TiptapPreview = ({ content }) => {
 
   try {
     const parsedContent =
-      typeof content === 'string' ? JSON.parse(content) : content
+      typeof content === 'string' && content !== ''
+        ? JSON.parse(content)
+        : content
     return <div className="tiptap-preview">{renderContent(parsedContent)}</div>
   } catch (error) {
     return <div className="text-red-500">コンテンツの解析に失敗しました</div>
