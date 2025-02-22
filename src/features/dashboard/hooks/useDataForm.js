@@ -18,8 +18,6 @@ const useDataForm = () => {
   const {
     control,
     handleSubmit,
-    getValues,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -79,7 +77,6 @@ const useDataForm = () => {
         openSnackbar('新しい投稿を作成しました', 'success')
       }
     } catch (error) {
-      console.error('Error submitting form:', error)
       setLoading(false)
       openSnackbar(
         id ? '投稿の更新に失敗しました' : '投稿の作成に失敗しました',
@@ -97,8 +94,6 @@ const useDataForm = () => {
     navigate,
     handleSubmit,
     handleImageChange,
-    getValues,
-    watch,
   }
 }
 

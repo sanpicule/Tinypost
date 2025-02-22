@@ -1,8 +1,7 @@
 import { Box, Button, Skeleton, Typography } from '@mui/material'
-import ReactMarkdown from 'react-markdown'
 import { useNavigate } from 'react-router-dom'
-import remarkGfm from 'remark-gfm'
 
+import TiptapPreview from '@/components/TiptapPreview'
 import useResponsive from '@/hooks/useResponsive'
 
 import usePreview from '../hooks/usePreview'
@@ -87,9 +86,7 @@ const Preview = () => {
               },
             }}
           >
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {data.post[0]?.body}
-            </ReactMarkdown>
+            <TiptapPreview content={data.post[0]?.body} />
           </Box>
         </Box>
       )}
