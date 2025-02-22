@@ -1,67 +1,34 @@
-import { Box, Container, Stack } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Box, Container, Typography } from '@mui/material'
 
-import AuthFormField from '@/components/AuthFormField'
 import AuthGoogleButton from '@/components/AuthGoogleButton'
-import AuthLoadingButton from '@/components/AuthLoadingButton'
-import AuthTitle from '@/components/AuthTitle'
-
-import useLogin from '../hooks/useLogin'
 
 export default function Login() {
-  const {
-    email,
-    password,
-    showPassword,
-    setEmail,
-    setPassword,
-    handleClickShowPassword,
-    handleSubmit,
-  } = useLogin()
-
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
         }}
       >
-        <AuthTitle auth={'login'} title={'ログイン'} />
         <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ mt: 1, width: '100%' }}
-        >
-          <AuthFormField
-            email={email}
-            password={password}
-            showPassword={showPassword}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            handleClickShowPassword={handleClickShowPassword}
-          />
-          <AuthLoadingButton buttonContent={'ログイン'} />
-          <Stack sx={{ mt: 2, gap: 1 }}>
-            <Link to="/forget" variant="body2">
-              パスワードを忘れた場合
-            </Link>
-            <Link to="/signup" variant="body2">
-              {'アカウントをお持ちでない方はこちら'}
-            </Link>
-          </Stack>
-        </Box>
-        <Box
+          component="img"
           sx={{
-            borderTop: '0.5px solid gray',
-            width: '100%',
-            padding: 2,
-            mt: 4,
+            height: 100,
+            width: 100,
           }}
+          alt="The house from the offer."
+          src="/images/favion.ico"
         />
-        <AuthGoogleButton />
+        <Typography sx={{ fontSize: '30px', fontWeight: 'bold', marginTop: 4 }}>
+          TinyPostで投稿しよう！
+        </Typography>
+        <Box marginTop={4}>
+          <AuthGoogleButton />
+        </Box>
       </Box>
     </Container>
   )
