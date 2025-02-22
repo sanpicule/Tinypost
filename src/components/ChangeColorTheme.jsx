@@ -6,7 +6,6 @@ import {
   Menu,
   MenuItem,
   Stack,
-  Typography,
   useColorScheme,
 } from '@mui/material'
 import { useState } from 'react'
@@ -53,13 +52,11 @@ const ChangeColorTheme = () => {
         <MenuItem onClick={() => handleClose('dark')}>
           <Stack direction={'row'} sx={{ gap: 1 }}>
             <DarkModeIcon />
-            <Typography>DarkMode</Typography>
           </Stack>
         </MenuItem>
         <MenuItem onClick={() => handleClose('light')}>
           <Stack direction={'row'} sx={{ gap: 1 }}>
             <LightModeIcon />
-            <Typography>LightMode</Typography>
           </Stack>
         </MenuItem>
       </Menu>

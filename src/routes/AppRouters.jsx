@@ -8,11 +8,9 @@ import {
 import Dashboard from '@/features/dashboard/components/Dashboard'
 import DataForm from '@/features/dashboard/components/DataForm'
 import DeleteDialog from '@/features/dashboard/components/DeleteDialog'
-import ForgetPassword from '@/features/fogetPassword/components/ForgetPassword'
 import Login from '@/features/login/components/Login'
 import Preview from '@/features/preview/components/Preview'
 import Profile from '@/features/profile/component/Profile'
-import Signup from '@/features/signup/components/Signup'
 import LayoutAppBar from '@/layouts/LayoutAppBar'
 
 import PrivateRoute from './PrivateRoute'
@@ -30,8 +28,6 @@ const RouteProvider = () => {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forget" element={<ForgetPassword />} />
         <Route element={<LayoutAppBar />}>
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="delete/:id" element={<DeleteDialog />} />
