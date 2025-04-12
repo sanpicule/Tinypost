@@ -1,24 +1,17 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import MenuIcon from '@mui/icons-material/Menu'
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
-import { Avatar, Button, Stack } from '@mui/material'
+import { Avatar, Stack } from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
-import Divider from '@mui/material/Divider'
 import MuiDrawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import { styled, useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import ChangeColorTheme from '@/components/ChangeColorTheme'
 import LogoutButton from '@/components/LogoutButton'
@@ -26,6 +19,8 @@ import LogoutDialog from '@/components/LogoutDialog'
 import useAuth from '@/hooks/useAuth'
 import useResponsive from '@/hooks/useResponsive'
 import useLoginInfo from '@/store/useLoginInfo'
+
+import MenuList from './components/MenuList'
 
 const drawerWidth = 240
 
@@ -53,7 +48,8 @@ const closedMixin = (theme) => ({
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
+  paddingLeft: '20px',
   ...theme.mixins.toolbar,
 }))
 
@@ -105,8 +101,6 @@ const Drawer = styled(MuiDrawer, {
   ],
 }))
 
-const drawerMenus = [{ title: '記事一覧', icon: 'dashboard' }]
-
 export default function LayoutAppBar() {
   const [open, setOpen] = useState(false)
   const userInfo = useLoginInfo((state) => state.user)
@@ -120,10 +114,6 @@ export default function LayoutAppBar() {
   useEffect(() => {
     checkSession()
   }, [])
-
-  const handleClickDialogOpen = () => {
-    setDialogOpen(true)
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -214,16 +204,11 @@ export default function LayoutAppBar() {
             </Stack>
           </AppBar>
           {!mobile && (
-            <Drawer
-              variant="permanent"
-              open={open}
-              sx={{
-                '& .MuiDrawer-paper': {
-                  backgroundColor: 'background.lightBlue',
-                },
-              }}
-            >
+            <Drawer variant="permanent" open={open}>
               <DrawerHeader>
+                <Typography fontSize="large" fontWeight="bold">
+                  メニュー
+                </Typography>
                 <IconButton onClick={handleDrawerClose}>
                   {theme.direction === 'rtl' ? (
                     <ChevronRightIcon />
@@ -232,56 +217,7 @@ export default function LayoutAppBar() {
                   )}
                 </IconButton>
               </DrawerHeader>
-              <Divider />
-              <List sx={{ paddingX: '10px' }}>
-                {drawerMenus.map((menu) => (
-                  <ListItem
-                    key={menu.title}
-                    disablePadding
-                    sx={{
-                      display: 'block',
-                      borderRadius: '10px',
-                    }}
-                  >
-                    <ListItemButton
-                      component={Link}
-                      to={`/${menu.icon}`}
-                      onClick={() => handleDrawerClose()}
-                      sx={[
-                        { minHeight: 48, px: 2.5, borderRadius: '10px' },
-                        open
-                          ? { justifyContent: 'initial' }
-                          : { justifyContent: 'center' },
-                      ]}
-                    >
-                      <ListItemIcon
-                        sx={[
-                          { minWidth: 0, justifyContent: 'center' },
-                          open ? { mr: 3 } : { mr: 'auto' },
-                        ]}
-                      >
-                        <SpaceDashboardIcon />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={menu.title}
-                        sx={[open ? { opacity: 1 } : { opacity: 0 }]}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-                {open && (
-                  <ListItem>
-                    <Button
-                      color="error"
-                      variant="outlined"
-                      sx={{ width: '100%' }}
-                      onClick={handleClickDialogOpen}
-                    >
-                      ログアウト
-                    </Button>
-                  </ListItem>
-                )}
-              </List>
+              <MenuList setDialogOpen={setDialogOpen} />
             </Drawer>
           )}
           <Box

@@ -31,7 +31,11 @@ const Profile = () => {
   } = useProfile()
 
   return (
-    <div>
+    <Stack
+      sx={{ width: mobile ? '100%' : '80%', mt: 4 }}
+      justifyContent={'center'}
+      mx="auto"
+    >
       <PageHeader pageTitle="プロフィール" />
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 6 }}>
         <Typography fontWeight={'bold'}>プロフィール画像</Typography>
@@ -40,8 +44,8 @@ const Profile = () => {
             alt="プロフィール編集"
             src={previewImage}
             sx={{
-              width: mobile ? '100px' : '180px',
-              height: mobile ? '100px' : '180px',
+              width: mobile ? '100px' : '150px',
+              height: mobile ? '100px' : '150px',
               zIndex: 1,
               backgroundColor: 'background.lightBlue',
             }}
@@ -68,8 +72,8 @@ const Profile = () => {
                       position: 'absolute',
                       bottom: 0,
                       right: 0,
-                      width: mobile ? '35px' : '50px',
-                      height: mobile ? '35px' : '50px',
+                      width: mobile ? '30px' : '35px',
+                      height: mobile ? '30px' : '35px',
                       borderRadius: '50%',
                       boxShadow: 1,
                       bgcolor: 'primary.main',
@@ -79,7 +83,7 @@ const Profile = () => {
                       },
                     }}
                   >
-                    <EditIcon sx={{ color: 'text.main' }} />
+                    <EditIcon fontSize="small" sx={{ color: 'text.main' }} />
                   </IconButton>
                 </label>
               </Box>
@@ -100,6 +104,14 @@ const Profile = () => {
               margin="normal"
               error={!!errors.full_name}
               helperText={errors.full_name?.message}
+              size="small"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderRadius: 2,
+                  },
+                },
+              }}
             />
           )}
         />
@@ -118,10 +130,19 @@ const Profile = () => {
               helperText={errors.email?.message}
               aria-readonly
               disabled={true}
+              size="small"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderRadius: 2,
+                  },
+                },
+              }}
             />
           )}
         />
         <Stack
+          direction={mobile ? 'column' : 'row'}
           sx={{
             mt: 4,
             width: '100%',
@@ -130,24 +151,26 @@ const Profile = () => {
             pb: 10,
           }}
         >
+          <Button
+            onClick={() => navigate('/dashboard')}
+            variant="outlined"
+            color="inherit"
+            sx={{ borderRadius: 2 }}
+          >
+            戻る
+          </Button>
           <LoadingButton
             type="submit"
             variant="contained"
             color="primary"
             loading={loading}
+            sx={{ borderRadius: 2 }}
           >
-            保存
+            プロフィールを更新する
           </LoadingButton>
-          <Button
-            onClick={() => navigate(-1)}
-            variant="outlined"
-            color="inherit"
-          >
-            戻る
-          </Button>
         </Stack>
       </Box>
-    </div>
+    </Stack>
   )
 }
 

@@ -1,5 +1,6 @@
 import { Box, Stack } from '@mui/material'
 import Link from '@tiptap/extension-link'
+import Placeholder from '@tiptap/extension-placeholder'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import PropTypes from 'prop-types'
@@ -13,11 +14,17 @@ const Editor = ({ onChange, value }) => {
   const { parseContent } = useParseEditor()
 
   const editor = useEditor({
-    extensions: [StarterKit, Link.configure({ openOnClick: true })],
+    extensions: [
+      StarterKit,
+      Link.configure({ openOnClick: true }),
+      Placeholder.configure({
+        placeholder: 'ここに本文を入力してください…', // 任意のプレースホルダー文
+      }),
+    ],
     content: parseContent(value),
     editorProps: {
       attributes: {
-        class: 'prose prose-base m-5 text-left',
+        class: 'prose prose-base m-5 text-left is-editor',
         style: 'outline: none;',
       },
     },
@@ -37,14 +44,16 @@ const Editor = ({ onChange, value }) => {
   if (!editor) return null
 
   return (
-    <Stack sx={{ border: 1, borderColor: 'gray', borderRadius: 1 }}>
+    <Stack sx={{ border: 1, borderColor: '#ccc', borderRadius: 2 }}>
       <RichEditorToolbar editor={editor} />
       <Box
         sx={{
           borderTop: 1,
-          borderColor: 'gray',
+          borderColor: '#d4d4d4',
           px: 2,
-          height: '50vh',
+          minHeight: '100px', // 初期サイズ
+          maxHeight: '50vh', // 最大サイズ
+          height: 'auto', // 内容に応じて伸びる
           overflow: 'auto',
         }}
         onClick={() => editor?.commands.focus()}

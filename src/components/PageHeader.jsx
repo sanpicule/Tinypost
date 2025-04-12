@@ -1,16 +1,10 @@
 import { Stack, Typography } from '@mui/material'
 import PropTypes from 'prop-types'
 
-import useResponsive from '@/hooks/useResponsive'
-
 const PageHeader = ({ pageTitle }) => {
-  const { mobile } = useResponsive()
   return (
-    <Stack direction={'row'} alignItems={'center'} sx={{ mt: 2 }}>
-      <Typography
-        variant={mobile ? 'h5' : 'h4'}
-        sx={{ width: '100%', fontWeight: 'bold' }}
-      >
+    <Stack direction={'row'} alignItems={'center'}>
+      <Typography sx={{ width: '100%', fontSize: '24px', fontWeight: 600 }}>
         {pageTitle}
       </Typography>
     </Stack>

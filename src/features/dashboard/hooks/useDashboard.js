@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import useSupabase from '@/hooks/useSupabase'
 
 const useDashboard = () => {
   const [page, setPage] = useState(0)
   const [posts, setPosts] = useState([])
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const searchLabel = searchParams.get('label')
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [isFetch, setIsFetch] = useState(true)
+  const [keyword, setKeyword] = useState('')
   const navigate = useNavigate()
-  const location = useLocation()
-  const pathname = location.pathname
-  const { fetchPosts, fetchFilterPosts } = useSupabase()
+  const { fetchPosts } = useSupabase()
+  console.log(searchParams.get('label'))
   useEffect(() => {
+    setIsFetch(true)
     const getPosts = async () => {
-      const { data, error } = await fetchPosts()
+      const { data, error } = await fetchPosts(keyword, searchLabel)
       if (data) {
         setPosts(data)
         setIsFetch(false)
@@ -24,22 +25,9 @@ const useDashboard = () => {
         console.error(error)
       }
     }
-    const getFilterPosts = async (item) => {
-      const { data, error } = await fetchFilterPosts(item)
-      if (data) {
-        setPosts(data)
-        setIsFetch(false)
-      } else {
-        console.error(error)
-      }
-    }
-    if (searchLabel == 0) {
-      getPosts()
-    }
-    if (searchLabel == 1 || searchLabel == 2) {
-      getFilterPosts(searchLabel)
-    }
-  }, [pathname, searchParams])
+
+    getPosts()
+  }, [searchParams])
 
   const handleRegisterNavigate = () => {
     navigate('./register')
@@ -47,6 +35,16 @@ const useDashboard = () => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
+  }
+
+  const handleSearchSubmit = () => {
+    const newParams = new URLSearchParams(searchParams)
+    newParams.set('keyword', keyword)
+    setSearchParams(newParams)
+  }
+
+  const handleChangeKeyword = (event) => {
+    setKeyword(event.target.value)
   }
 
   const handleChangeRowsPerPage = (event) => {
@@ -58,11 +56,16 @@ const useDashboard = () => {
     posts,
     rowsPerPage,
     isFetch,
+    searchParams,
+    keyword,
+    setSearchParams,
     setIsFetch,
     setPosts,
     handleRegisterNavigate,
     handleChangePage,
     handleChangeRowsPerPage,
+    handleChangeKeyword,
+    handleSearchSubmit,
   }
 }
 

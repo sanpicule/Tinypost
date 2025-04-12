@@ -1,18 +1,12 @@
-import { CssBaseline, ThemeProvider } from '@mui/material'
-
-import useCustomTheme from '@public/useCustomTheme.js'
-
-import CustomSnackbar from './components/CustomSnackbar.jsx'
-import RouteProvider from './routes/AppRouters.jsx'
+import CustomSnackbar from './components/CustomSnackbar'
+import RouteProvider from './routes/AppRouters'
 
 function App() {
-  const { theme } = useCustomTheme()
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <RouteProvider />
       <CustomSnackbar />
-    </ThemeProvider>
+    </>
   )
 }
 

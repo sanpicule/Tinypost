@@ -8,15 +8,32 @@ const useSupabase = () => {
     return user
   }
   // 全件取得
-  const fetchPosts = async () => {
+  const fetchPosts = async (keyword = '', label = 0) => {
     try {
       const user = await getLoginUser()
-      const { data, error } = await supabase
+
+      let query = supabase
         .from('news')
         .select('*')
         .order('created_at', { ascending: false })
         .eq('user_id', user.id)
+
+      // キーワードがある場合は部分一致検索を追加
+      if (keyword.trim()) {
+        query = query.ilike('title', `%${keyword}%`)
+      }
+
+      if (label) {
+        const labelValue = parseInt(label, 10)
+        if (!isNaN(labelValue) && (labelValue === 1 || labelValue === 2)) {
+          query = query.eq('label', labelValue)
+        }
+      }
+
+      const { data, error } = await query
+
       if (error) throw error
+
       return { data, error: null }
     } catch (error) {
       return { data: null, error }
@@ -37,21 +54,7 @@ const useSupabase = () => {
       return { data: null, error }
     }
   }
-  // 絞り込み条件に紐づくデータ取得
-  const fetchFilterPosts = async (item) => {
-    try {
-      const user = await getLoginUser()
-      const { data, error } = await supabase
-        .from('news')
-        .select('*')
-        .eq('label', item)
-        .eq('user_id', user.id)
-      if (error) throw error
-      return { data, error: null }
-    } catch (error) {
-      return { data: null, error }
-    }
-  }
+
   // 画像をアップロードして公開URLを取得する関数
   const uploadImage = async (file) => {
     const fileExt = file.name.split('.').pop()
@@ -137,7 +140,6 @@ const useSupabase = () => {
   return {
     fetchPosts,
     fetchPost,
-    fetchFilterPosts,
     uploadImage,
     insertPost,
     updatePost,

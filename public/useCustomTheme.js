@@ -1,69 +1,61 @@
 import { createTheme } from '@mui/material/styles'
-import { useState } from 'react'
 
-const useCustomTheme = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const theme = createTheme({
-    components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          body: {
-            transition: 'background-color 0.5s ease, color 0.5s ease',
-          },
+const theme = createTheme({
+  colorSchemes: {
+    light: {
+      palette: {
+        mode: 'light',
+        primary: { main: '#307B8C' },
+        secondary: { main: '#F4A460' },
+        public: { main: '#3eb370' },
+        notPublic: { main: '#D93A49' },
+        background: {
+          default: '#fff',
+          paper: '#f5f5f5',
+          cooking: '#ef6c00',
+          news: '#2196f3',
+          cancel: '#eee',
+        },
+        text: {
+          default: '#121212',
+        },
+        border: {
+          default: '#121212',
         },
       },
     },
-    colorSchemes: {
-      dark: true,
-    },
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 768,
-        lg: 1025,
-        xl: 1536,
+    dark: {
+      palette: {
+        mode: 'dark',
+        primary: { main: '#307B8C' },
+        secondary: { main: '#F4A460' },
+        public: { main: '#219634' },
+        notPublic: { main: '#D93A49' },
+        background: {
+          default: '#121212',
+          paper: '#1e1e1e',
+          cooking: '#ef6c00',
+          news: '#219634',
+          cancel: '#1e1e1e',
+        },
+        text: {
+          default: 'white',
+        },
+        border: {
+          default: 'white',
+        },
       },
     },
-    palette: {
-      mode: isDarkMode ? 'dark' : 'light',
-      text: {
-        main: '#fff',
-      },
-      background: {
-        cooking: '#ef6c00',
-        news: '#2196f3',
-        lightBlue: '#97BDC5',
-      },
-      primary: {
-        main: '#307B8C',
-        light: '#80D8FF',
-        dark: '#103B4C',
-      },
-      secondary: {
-        main: '#F4A460',
-        light: '#fff176',
-        dark: '#F4A410',
-      },
-      error: {
-        main: '#BF3C30',
-        light: '#FFCCAA',
-        dark: '#9F2C20',
-      },
-      success: {
-        main: '#1de9b6',
-        dark: '#4caf50',
-      },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 768,
+      lg: 1025,
+      xl: 1536,
     },
-  })
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode)
-  }
-  return {
-    theme,
-    isDarkMode,
-    toggleDarkMode,
-  }
-}
+  },
+})
 
-export default useCustomTheme
+export default theme

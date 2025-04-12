@@ -17,25 +17,19 @@ import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import Editor from '@/components/Editor'
+import ImageUploadField from '@/components/ImageUploadField'
 import PageHeader from '@/components/PageHeader'
+import useResponsive from '@/hooks/useResponsive'
 
 import useDataForm from '../hooks/useDataForm'
 
 const DataForm = () => {
-  const {
-    id,
-    control,
-    loading,
-    errors,
-    previewImage,
-    onSubmit,
-    navigate,
-    handleSubmit,
-    handleImageChange,
-  } = useDataForm()
+  const { id, control, loading, errors, onSubmit, navigate, handleSubmit } =
+    useDataForm()
+  const { mobile } = useResponsive()
 
   return (
-    <>
+    <Stack sx={{ width: mobile ? '100%' : '80%', mt: 4 }} mx="auto">
       <PageHeader pageTitle={id ? '記事編集' : '記事登録'} />
       {id && (
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -50,7 +44,11 @@ const DataForm = () => {
           </Link>
         </Box>
       )}
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 4 }}>
+      <Stack
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{ mt: 4, gap: 2 }}
+      >
         <Controller
           name="public"
           control={control}
@@ -74,6 +72,12 @@ const DataForm = () => {
               margin="normal"
               error={!!errors.title}
               helperText={errors.title?.message}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2, // ← ここで角を丸めない
+                },
+              }}
+              size="small"
             />
           )}
         />
@@ -92,19 +96,19 @@ const DataForm = () => {
             </>
           )}
         />
-        {/* <Editor
-          setValue={setValue}
-          initialContent={data?.body}
-          setError={setError}
-          errors={errors}
-        /> */}
         <Controller
           name="label"
           control={control}
           render={({ field }) => (
             <FormControl fullWidth margin="normal" error={!!errors.label}>
               <InputLabel id="post-label">種類を選択する</InputLabel>
-              <Select {...field} labelId="post-label" label="種類を選択する">
+              <Select
+                {...field}
+                labelId="post-label"
+                label="種類を選択する"
+                size="small"
+                sx={{ borderRadius: 2 }}
+              >
                 <MenuItem value={1}>お知らせ</MenuItem>
                 <MenuItem value={2}>料理教室</MenuItem>
               </Select>
@@ -119,36 +123,13 @@ const DataForm = () => {
         <Controller
           name="image"
           control={control}
+          defaultValue={[]}
           render={({ field }) => (
-            <Box>
-              <input
-                accept="image/*"
-                style={{ display: 'none' }}
-                id="raised-button-file"
-                type="file"
-                onChange={(e) => {
-                  handleImageChange(e)
-                  field.onChange(e.target.files)
-                }}
-              />
-              <label htmlFor="raised-button-file">
-                <Button variant="contained" component="span" color="secondary">
-                  画像をアップロードする
-                </Button>
-              </label>
-              {previewImage && (
-                <Box sx={{ mt: 2 }}>
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    style={{ maxWidth: '100%', maxHeight: '200px' }}
-                  />
-                </Box>
-              )}
-            </Box>
+            <ImageUploadField value={field.value} onChange={field.onChange} />
           )}
         />
         <Stack
+          direction={mobile ? 'column' : 'row'}
           sx={{
             mt: 4,
             width: '100%',
@@ -157,24 +138,26 @@ const DataForm = () => {
             pb: 10,
           }}
         >
+          <Button
+            onClick={() => navigate('/dashboard')}
+            variant="outlined"
+            color="inherit"
+            sx={{ borderRadius: 2 }}
+          >
+            戻る
+          </Button>
           <LoadingButton
             type="submit"
             variant="contained"
             color="primary"
             loading={loading}
+            sx={{ borderRadius: 2 }}
           >
             {id ? '保存' : '作成'}
           </LoadingButton>
-          <Button
-            onClick={() => navigate(-1)}
-            variant="outlined"
-            color="inherit"
-          >
-            戻る
-          </Button>
         </Stack>
-      </Box>
-    </>
+      </Stack>
+    </Stack>
   )
 }
 
