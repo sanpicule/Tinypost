@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import DotsMenu from '@/components/DotsMenu'
 import useFormatDate from '@/hooks/useFormatDate'
 import useResponsive from '@/hooks/useResponsive'
-import useCustomTheme from '@public/useCustomTheme'
+import theme from '@public/useCustomTheme'
 
 const TableCustomBody = ({
   posts,
@@ -18,7 +18,6 @@ const TableCustomBody = ({
 }) => {
   const { formatDate } = useFormatDate()
   const { mobile } = useResponsive()
-  const { theme } = useCustomTheme()
   return (
     <TableBody>
       {posts

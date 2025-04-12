@@ -3,3 +3,11 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.ProseMirror p.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

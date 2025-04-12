@@ -6,57 +6,51 @@ import {
   Menu,
   MenuItem,
   Stack,
+  Typography,
   useColorScheme,
 } from '@mui/material'
 import { useState } from 'react'
-
-import useCustomTheme from '@public/useCustomTheme'
 
 const ChangeColorTheme = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const { mode, setMode } = useColorScheme()
-  const { toggleDarkMode } = useCustomTheme()
+
   const handleClick = (event) => {
-    toggleDarkMode()
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = (theme) => {
-    setMode(theme)
+
+  const handleClose = (newMode) => {
+    setMode(newMode)
     setAnchorEl(null)
   }
+
   return (
     <Box>
       <IconButton
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+        onClick={handleClick}
+        aria-controls={open ? 'theme-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
       >
-        {mode === 'dark' ? (
-          <DarkModeIcon />
-        ) : (
-          <LightModeIcon sx={{ color: 'text.main' }} />
-        )}
+        {mode === 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
       </IconButton>
       <Menu
-        id="basic-menu"
+        id="theme-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={() => setAnchorEl(null)}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
       >
-        <MenuItem onClick={() => handleClose('dark')}>
-          <Stack direction={'row'} sx={{ gap: 1 }}>
-            <DarkModeIcon />
+        <MenuItem onClick={() => handleClose('light')}>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <LightModeIcon />
+            <Typography>ライトモード</Typography>
           </Stack>
         </MenuItem>
-        <MenuItem onClick={() => handleClose('light')}>
-          <Stack direction={'row'} sx={{ gap: 1 }}>
-            <LightModeIcon />
+        <MenuItem onClick={() => handleClose('dark')}>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <DarkModeIcon />
+            <Typography>ダークモード</Typography>
           </Stack>
         </MenuItem>
       </Menu>

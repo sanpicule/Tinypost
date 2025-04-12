@@ -1,20 +1,13 @@
-import Brightness1Icon from '@mui/icons-material/Brightness1'
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Chip,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { useTheme } from '@mui/material'
+import { Card, CardContent, Chip, Stack, Typography, Box } from '@mui/material'
 import PropTypes from 'prop-types'
 
 import DotsMenu from '@/components/DotsMenu'
-import useCustomTheme from '@public/useCustomTheme'
+import useResponsive from '@/hooks/useResponsive'
 
 const PostCard = ({ posts, post }) => {
-  const { theme } = useCustomTheme()
-
+  const { mobile } = useResponsive()
+  const theme = useTheme()
   const formatDate = (isoString) => {
     const date = new Date(isoString)
     const year = date.getFullYear()
@@ -24,69 +17,80 @@ const PostCard = ({ posts, post }) => {
   }
 
   return (
-    <Card>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="100"
-        image={
-          post.image_url
-            ? `${post.image_url}`
-            : '../../../../public/images/noImage.jpg'
-        }
-      />
-      <CardContent>
-        {post.label === 1 ? (
-          <Chip
-            variant="outlined"
-            label="お知らせ"
-            sx={{
-              borderColor: theme.palette.background.news,
-              color: theme.palette.background.news,
-            }}
-            size="small"
-          />
-        ) : (
-          <Chip
-            variant="outlined"
-            label="料理教室"
-            sx={{
-              borderColor: theme.palette.background.cooking,
-              color: theme.palette.background.cooking,
-            }}
-            size="small"
-          />
-        )}
-        <Stack direction="row" justifyContent="space-between" sx={{ mt: 2 }}>
-          <Stack direction="row" gap={1} alignItems="center">
-            <Brightness1Icon
+    <Card
+      variant="outlined"
+      sx={{
+        borderRadius: '16px',
+        mt: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        transition: '0.3s',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        ':hover': {
+          borderColor: 'primary.main',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        },
+      }}
+    >
+      <CardContent
+        sx={{ p: 2.5, flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+      >
+        <Stack direction="row" justifyContent="space-between" mb={1}>
+          <Stack direction="column" gap={2}>
+            <Chip
+              label={post.public ? '公開中' : '非公開'}
               sx={{
-                width: '10px',
-                color: post.public
-                  ? theme.palette.success.main
-                  : theme.palette.error.main,
+                width: '70px',
+                fontSize: mobile && '0.65rem',
+                fontWeight: 'bold',
+                color: '#fff',
+                backgroundColor:
+                  theme.palette[post.public ? 'public' : 'notPublic'].main,
               }}
+              size="small"
             />
-            <Typography sx={{ fontSize: '12px' }}>
-              {post.public ? '公開中' : '非公開'}
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                fontWeight: 600,
+                fontSize: '1rem',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: 'vertical',
+              }}
+            >
+              {post.title}
             </Typography>
           </Stack>
-          <Typography sx={{ fontSize: '12px' }}>
-            {`${formatDate(post.created_at)}に投稿済み`}
-          </Typography>
+          <DotsMenu posts={posts} post={post} />
         </Stack>
+
+        <Box sx={{ flexGrow: 1 }} />
+
         <Stack
-          flexDirection="row"
+          direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mt: 2 }}
+          marginTop={2}
         >
-          <Typography sx={{ fontWeight: 'bold', fontSize: '16px' }}>
-            {post.title}
+          <Chip
+            label={post.label === 1 ? 'お知らせ' : '料理教室'}
+            sx={{
+              borderRadius: 1,
+              backgroundColor: '#4d4d4d',
+              fontSize: '0.65rem',
+              px: 0.5,
+              fontWeight: 500,
+              color: '#fff',
+            }}
+            size="small"
+          />
+          <Typography variant="caption" color="text.secondary">
+            {`${formatDate(post.created_at)} に投稿`}
           </Typography>
-          <Stack alignItems="flex-end">
-            <DotsMenu posts={posts} post={post} />
-          </Stack>
         </Stack>
       </CardContent>
     </Card>

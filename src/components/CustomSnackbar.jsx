@@ -1,11 +1,10 @@
 import { Snackbar } from '@mui/material'
 
 import useSnackbarOpen from '@/store/useSnackbarOpen'
-import useCustomTheme from '@public/useCustomTheme'
+import theme from '@public/useCustomTheme'
 
 const CustomSnackbar = () => {
   const { isOpen, message, closeSnackbar, type } = useSnackbarOpen()
-  const { theme } = useCustomTheme()
   const getSnackbarColor = (type) => {
     switch (type) {
       case 'success':

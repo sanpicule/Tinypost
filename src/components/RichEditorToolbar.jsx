@@ -41,9 +41,7 @@ const RichEditorToolbar = ({ editor }) => {
   }
 
   return (
-    <Stack
-      sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
-    >
+    <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}>
       <Button
         onClick={() => editor.chain().focus().toggleBold().run()}
         sx={{ opacity: editor.isActive('bold') ? 1 : 0.5 }}
