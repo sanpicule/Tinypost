@@ -96,6 +96,12 @@ const DataForm = () => {
             </>
           )}
         />
+        {/* <Editor
+          setValue={setValue}
+          initialContent={data?.body}
+          setError={setError}
+          errors={errors}
+        /> */}
         <Controller
           name="label"
           control={control}
