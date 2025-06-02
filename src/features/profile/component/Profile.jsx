@@ -168,6 +168,14 @@ const Profile = () => {
           >
             プロフィールを更新する
           </LoadingButton>
+          <Button
+            onClick={() => navigate('/dashboard')}
+            variant="outlined"
+            color="inherit"
+            sx={{ borderRadius: 2 }}
+          >
+            戻る
+          </Button>
         </Stack>
       </Box>
     </Stack>

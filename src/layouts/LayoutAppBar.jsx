@@ -27,7 +27,7 @@ const drawerWidth = 240
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
+    easing: theme.transitions.easing.easeOut,
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
@@ -35,7 +35,7 @@ const openedMixin = (theme) => ({
 
 const closedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
+    easing: theme.transitions.easing.easeIn,
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
@@ -58,8 +58,8 @@ const AppBar = styled(MuiAppBar, {
 })(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    easing: theme.transitions.easing.easeOut,
+    duration: theme.transitions.duration.enteringScreen,
   }),
   variants: [
     {
@@ -68,7 +68,7 @@ const AppBar = styled(MuiAppBar, {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
-          easing: theme.transitions.easing.sharp,
+          easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
         }),
       },
@@ -140,22 +140,20 @@ export default function LayoutAppBar() {
               sx={{ paddingX: '10px' }}
             >
               <Toolbar>
-                {!mobile && (
-                  <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    sx={[
-                      {
-                        marginRight: 5,
-                      },
-                      open && { display: 'none' },
-                    ]}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                )}
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  edge="start"
+                  sx={[
+                    {
+                      marginRight: 5,
+                    },
+                    open && { display: 'none' },
+                  ]}
+                >
+                  <MenuIcon />
+                </IconButton>
                 <Stack
                   direction={'row'}
                   alignItems={'center'}
@@ -203,7 +201,39 @@ export default function LayoutAppBar() {
               )}
             </Stack>
           </AppBar>
-          {!mobile && (
+          {mobile ? (
+            <MuiDrawer
+              variant="temporary"
+              open={open}
+              onClose={handleDrawerClose}
+              ModalProps={{
+                keepMounted: true,
+              }}
+              sx={{
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: drawerWidth,
+                },
+              }}
+            >
+              <DrawerHeader>
+                <Typography fontSize="large" fontWeight="bold">
+                  メニュー
+                </Typography>
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === 'rtl' ? (
+                    <ChevronRightIcon />
+                  ) : (
+                    <ChevronLeftIcon />
+                  )}
+                </IconButton>
+              </DrawerHeader>
+              <MenuList
+                setDialogOpen={setDialogOpen}
+                onClose={handleDrawerClose}
+              />
+            </MuiDrawer>
+          ) : (
             <Drawer variant="permanent" open={open}>
               <DrawerHeader>
                 <Typography fontSize="large" fontWeight="bold">
@@ -217,12 +247,25 @@ export default function LayoutAppBar() {
                   )}
                 </IconButton>
               </DrawerHeader>
-              <MenuList setDialogOpen={setDialogOpen} />
+              <MenuList
+                setDialogOpen={setDialogOpen}
+                onClose={handleDrawerClose}
+              />
             </Drawer>
           )}
           <Box
             component="main"
-            sx={{ flexGrow: 1, p: 3, width: '90%', height: '100%' }}
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              width: '90%',
+              height: '100%',
+              marginLeft: mobile ? 0 : open ? `${drawerWidth}px` : '64px',
+              transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+              }),
+            }}
           >
             <DrawerHeader />
             <Outlet />

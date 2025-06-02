@@ -16,7 +16,6 @@ import {
 import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import Editor from '@/components/Editor'
 import ImageUploadField from '@/components/ImageUploadField'
 import PageHeader from '@/components/PageHeader'
 import useResponsive from '@/hooks/useResponsive'
@@ -74,10 +73,9 @@ const DataForm = () => {
               helperText={errors.title?.message}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, // ← ここで角を丸めない
+                  borderRadius: 2,
                 },
               }}
-              size="small"
             />
           )}
         />
@@ -86,22 +84,24 @@ const DataForm = () => {
           control={control}
           rules={{ required: '本文は必須です' }}
           render={({ field }) => (
-            <>
-              <Editor value={field.value} onChange={field.onChange} />
-              {errors.body && (
-                <Typography color="error" variant="caption">
-                  {errors.body.message}
-                </Typography>
-              )}
-            </>
+            <TextField
+              {...field}
+              label="本文"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={6}
+              margin="normal"
+              error={!!errors.body}
+              helperText={errors.body?.message}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                },
+              }}
+            />
           )}
         />
-        {/* <Editor
-          setValue={setValue}
-          initialContent={data?.body}
-          setError={setError}
-          errors={errors}
-        /> */}
         <Controller
           name="label"
           control={control}
@@ -112,7 +112,6 @@ const DataForm = () => {
                 {...field}
                 labelId="post-label"
                 label="種類を選択する"
-                size="small"
                 sx={{ borderRadius: 2 }}
               >
                 <MenuItem value={1}>お知らせ</MenuItem>
@@ -161,6 +160,14 @@ const DataForm = () => {
           >
             {id ? '保存' : '作成'}
           </LoadingButton>
+          <Button
+            onClick={() => navigate('/dashboard')}
+            variant="outlined"
+            color="inherit"
+            sx={{ borderRadius: 2 }}
+          >
+            戻る
+          </Button>
         </Stack>
       </Stack>
     </Stack>

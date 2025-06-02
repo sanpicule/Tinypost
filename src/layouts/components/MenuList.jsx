@@ -30,7 +30,7 @@ const iconMap = {
   ログアウト: <Logout />,
 }
 
-const MenuList = ({ setDialogOpen }) => {
+const MenuList = ({ setDialogOpen, onClose }) => {
   const navigate = useNavigate()
   const handleMenuClick = (item) => {
     if (item.onClick === 'logout') {
@@ -38,6 +38,8 @@ const MenuList = ({ setDialogOpen }) => {
     } else if (typeof item.onClick === 'function') {
       item.onClick()
     }
+    // メニュー項目をクリックした時にドロワーを閉じる
+    onClose?.()
   }
 
   const drawerMenus = [
@@ -102,6 +104,7 @@ const MenuList = ({ setDialogOpen }) => {
 }
 MenuList.propTypes = {
   setDialogOpen: PropTypes.func,
+  onClose: PropTypes.func,
 }
 
 export default MenuList
