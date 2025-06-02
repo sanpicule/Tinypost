@@ -151,6 +151,14 @@ const Profile = () => {
             pb: 10,
           }}
         >
+          <Button
+            onClick={() => navigate('/dashboard')}
+            variant="outlined"
+            color="inherit"
+            sx={{ borderRadius: 2 }}
+          >
+            戻る
+          </Button>
           <LoadingButton
             type="submit"
             variant="contained"
