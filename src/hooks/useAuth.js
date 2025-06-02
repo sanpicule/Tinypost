@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import useLoginInfo from '@/store/useLoginInfo'
@@ -22,9 +22,33 @@ const useAuth = () => {
     if (user) {
       const res = await getProfile(user.id)
       setUser(res)
+    } else {
+      clearUser()
+      navigate('/login')
     }
     setLoading(false)
   }
+
+  useEffect(() => {
+    // セッションの変更を監視
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        setIsLogin(false)
+        clearUser()
+        navigate('/login')
+      }
+    })
+
+    // 初期セッションチェック
+    checkSession()
+
+    // クリーンアップ
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
   const getProfile = async (id) => {
     try {
