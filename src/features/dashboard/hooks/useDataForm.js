@@ -57,7 +57,7 @@ const useDataForm = () => {
 
       const postData = {
         title: data.title,
-        body: data.body,
+        body: data.body.replace(/\r\n/g, '\n'), // Windowsの改行を統一
         public: data.public,
         label: data.label,
         image_url: image_url,

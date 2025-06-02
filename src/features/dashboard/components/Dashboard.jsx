@@ -42,9 +42,8 @@ export default function CustomizedTables() {
         keyword={keyword}
       />
       <>
-        {isFetch ? (
-          <PostCardSkelton />
-        ) : (
+        {isFetch && <PostCardSkelton />}
+        {!isFetch && posts.length > 0 && (
           <Box
             sx={{
               gap: 2,
