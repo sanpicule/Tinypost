@@ -5,44 +5,72 @@ const theme = createTheme({
     light: {
       palette: {
         mode: 'light',
-        primary: { main: '#307B8C' },
-        secondary: { main: '#F4A460' },
-        public: { main: '#3eb370' },
-        notPublic: { main: '#D93A49' },
+        primary: { main: '#2563EB', light: '#60a5fa', dark: '#1d4ed8' },
+        secondary: { main: '#7c3aed' },
+        public: { main: '#10b981' },
+        notPublic: { main: '#ef4444' },
         background: {
-          default: '#fff',
-          paper: '#f5f5f5',
-          cooking: '#ef6c00',
-          news: '#2196f3',
-          cancel: '#eee',
+          default: '#eef2ff',
+          paper: '#ffffff',
+          cancel: '#e2e8f0',
         },
         text: {
-          default: '#121212',
-        },
-        border: {
-          default: '#121212',
+          primary: '#1e293b',
+          secondary: '#64748b',
         },
       },
     },
     dark: {
       palette: {
         mode: 'dark',
-        primary: { main: '#307B8C' },
-        secondary: { main: '#F4A460' },
-        public: { main: '#219634' },
-        notPublic: { main: '#D93A49' },
+        primary: { main: '#3b82f6', light: '#60a5fa', dark: '#1d4ed8' },
+        secondary: { main: '#a78bfa' },
+        public: { main: '#10b981' },
+        notPublic: { main: '#ef4444' },
         background: {
-          default: '#121212',
-          paper: '#1e1e1e',
-          cooking: '#ef6c00',
-          news: '#219634',
-          cancel: '#1e1e1e',
+          default: '#1e293b',
+          paper: '#0f172a',
+          cancel: '#334155',
         },
         text: {
-          default: 'white',
+          primary: '#f1f5f9',
+          secondary: '#94a3b8',
         },
-        border: {
-          default: 'white',
+      },
+    },
+  },
+  typography: {
+    fontFamily: '"Inter", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif',
+  },
+  shape: {
+    borderRadius: 12,
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '10px',
+          textTransform: 'none',
+          fontWeight: 600,
+          boxShadow: 'none',
+          '&:hover': { boxShadow: 'none' },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '16px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05)',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: '10px',
+          },
         },
       },
     },

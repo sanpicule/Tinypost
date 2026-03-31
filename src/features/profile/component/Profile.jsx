@@ -32,7 +32,7 @@ const Profile = () => {
 
   return (
     <Stack
-      sx={{ width: mobile ? '100%' : '80%', mt: 4 }}
+      sx={{ width: mobile ? '100%' : '80%', mt: 4, px: mobile ? 2 : 0 }}
       justifyContent={'center'}
       mx="auto"
     >

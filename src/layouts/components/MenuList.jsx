@@ -2,106 +2,102 @@ import {
   Dashboard,
   AddBox,
   Person,
-  Settings,
-  HelpOutline,
-  Notifications,
   AccountCircle,
-  Logout,
 } from '@mui/icons-material'
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material'
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-// アイコンを title でマッピング
 const iconMap = {
   記事一覧: <Dashboard />,
   新規作成: <AddBox />,
   プロフィール: <Person />,
-  設定: <Settings />,
-  ヘルプ: <HelpOutline />,
-  お知らせ: <Notifications />,
   アカウント: <AccountCircle />,
-  ログアウト: <Logout />,
 }
 
-const MenuList = ({ setDialogOpen, onClose }) => {
+const drawerMenus = [
+  { title: '記事一覧', path: '/dashboard', onClick: (nav) => nav('/dashboard') },
+  { title: '新規作成', path: '/dashboard/register', onClick: (nav) => nav('/dashboard/register') },
+  { title: 'プロフィール', path: '/profile', onClick: (nav) => nav('/profile') },
+  { title: 'アカウント', path: '/account', onClick: (nav) => nav('/account') },
+]
+
+const MenuList = ({ onClose }) => {
   const navigate = useNavigate()
-  const handleMenuClick = (item) => {
-    if (item.onClick === 'logout') {
-      setDialogOpen(true)
-    } else if (typeof item.onClick === 'function') {
-      item.onClick()
+  const location = useLocation()
+
+  const isActive = (item) => {
+    if (!item.path) return false
+    if (item.path === '/dashboard') {
+      return (
+        location.pathname === '/dashboard' ||
+        (location.pathname.startsWith('/dashboard/') &&
+          !location.pathname.startsWith('/dashboard/register') &&
+          !location.pathname.startsWith('/dashboard/edit'))
+      )
     }
-    // メニュー項目をクリックした時にドロワーを閉じる
+    return location.pathname.startsWith(item.path)
+  }
+
+  const handleMenuClick = (item) => {
+    if (typeof item.onClick === 'function') {
+      item.onClick(navigate)
+    }
     onClose?.()
   }
 
-  const drawerMenus = [
-    {
-      title: '記事一覧',
-      onClick: () => navigate('dashboard'),
-    },
-    {
-      title: '新規作成',
-      onClick: () => navigate('dashboard/register'),
-    },
-    {
-      title: 'プロフィール',
-      onClick: () => navigate('profile'),
-    },
-    {
-      title: '設定',
-      onClick: () => console.log('設定画面へ'),
-    },
-    {
-      title: 'ヘルプ',
-      onClick: () => alert('まだ準備中です'),
-    },
-    {
-      title: 'お知らせ',
-      onClick: () => console.log('お知らせを表示'),
-    },
-    {
-      title: 'アカウント',
-      onClick: () => console.log('アカウント管理へ'),
-    },
-    {
-      title: 'ログアウト',
-      onClick: 'logout', // 特別処理
-    },
-  ]
   return (
-    <List
-      sx={{
-        width: '100%',
-        borderRadius: '8px',
-        marginTop: 2,
-      }}
-    >
-      {drawerMenus.map((item) => (
-        <ListItem key={item.title} disablePadding>
-          <ListItemButton onClick={() => handleMenuClick(item)}>
-            <ListItemIcon
-              sx={{ color: item.title === 'ログアウト' ? 'error.main' : '' }}
+    <List sx={{ p: 0 }}>
+      {drawerMenus.map((item) => {
+        const active = isActive(item)
+
+        return (
+          <ListItem key={item.title} disablePadding sx={{ mb: 0.5 }}>
+            <ListItemButton
+              onClick={() => handleMenuClick(item)}
+              sx={{
+                borderRadius: '12px',
+                py: 1.2,
+                px: 1.5,
+                background: active
+                  ? 'linear-gradient(135deg, #1565c0 0%, #42a5f5 100%)'
+                  : 'transparent',
+                boxShadow: active ? '0 4px 15px rgba(37,99,235,0.4)' : 'none',
+                '&:hover': {
+                  background: active
+                    ? 'linear-gradient(135deg, #1565c0 0%, #42a5f5 100%)'
+                    : 'rgba(255,255,255,0.08)',
+                },
+                transition: 'all 0.2s ease',
+              }}
             >
-              {iconMap[item.title]}
-            </ListItemIcon>
-            <ListItemText
-              primary={item.title}
-              sx={{ color: item.title === 'ログアウト' ? 'error.main' : '' }}
-            />
-          </ListItemButton>
-        </ListItem>
-      ))}
+              <ListItemIcon
+                sx={{
+                  minWidth: 36,
+                  color: active ? 'white' : 'rgba(255,255,255,0.55)',
+                }}
+              >
+                {iconMap[item.title]}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.title}
+                primaryTypographyProps={{
+                  fontSize: '14px',
+                  fontWeight: active ? 600 : 400,
+                  color: active ? 'white' : 'rgba(255,255,255,0.7)',
+                }}
+              />
+              {active && (
+                <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: 'white', ml: 1, flexShrink: 0 }} />
+              )}
+            </ListItemButton>
+          </ListItem>
+        )
+      })}
     </List>
   )
 }
+
 MenuList.propTypes = {
   setDialogOpen: PropTypes.func,
   onClose: PropTypes.func,

@@ -1,4 +1,3 @@
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
@@ -14,7 +13,6 @@ import {
   Typography,
 } from '@mui/material'
 import { Controller } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
 import ImageUploadField from '@/components/ImageUploadField'
 import PageHeader from '@/components/PageHeader'
@@ -28,21 +26,8 @@ const DataForm = () => {
   const { mobile } = useResponsive()
 
   return (
-    <Stack sx={{ width: mobile ? '100%' : '80%', mt: 4 }} mx="auto">
+    <Stack sx={{ width: mobile ? '100%' : '80%', mt: 4, px: mobile ? 2 : 0 }} mx="auto">
       <PageHeader pageTitle={id ? '記事編集' : '記事登録'} />
-      {id && (
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Link to={`/dashboard/preview/${id}`}>
-            <Button
-              variant="outlined"
-              sx={{ mt: 4 }}
-              startIcon={<PlayCircleOutlineIcon />}
-            >
-              プレビュー
-            </Button>
-          </Link>
-        </Box>
-      )}
       <Stack
         component="form"
         onSubmit={handleSubmit(onSubmit)}

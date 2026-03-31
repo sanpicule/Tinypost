@@ -25,3 +25,6 @@ dist-ssr
 
 # 環境変数ファイル
 .env*
+.vercel
+.env*.local
+.env.local

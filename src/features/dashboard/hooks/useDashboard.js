@@ -13,7 +13,6 @@ const useDashboard = () => {
   const [keyword, setKeyword] = useState('')
   const navigate = useNavigate()
   const { fetchPosts } = useSupabase()
-  console.log(searchParams.get('label'))
   useEffect(() => {
     setIsFetch(true)
     const getPosts = async () => {

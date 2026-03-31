@@ -3,8 +3,16 @@ import PropTypes from 'prop-types'
 
 const PageHeader = ({ pageTitle }) => {
   return (
-    <Stack direction={'row'} alignItems={'center'}>
-      <Typography sx={{ width: '100%', fontSize: '24px', fontWeight: 600 }}>
+    <Stack direction="row" alignItems="center">
+      <Typography
+        sx={{
+          width: '100%',
+          fontSize: '22px',
+          fontWeight: 700,
+          color: 'text.primary',
+          letterSpacing: '-0.3px',
+        }}
+      >
         {pageTitle}
       </Typography>
     </Stack>
