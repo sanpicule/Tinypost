@@ -7,9 +7,19 @@ TinyPost の公開 API は、APIキーで認証された外部アプリケーシ
 
 **Base URL**
 
-```
-https://your-project.vercel.app/api
-```
+| 環境 | URL |
+|------|-----|
+| ローカル開発 | `http://localhost:<PORT>/api`（起動時にターミナルで確認） |
+| 本番 | `https://your-project.vercel.app/api` |
+
+> ⚠️ **ローカル開発時の注意**
+> 
+> `npm run dev`（Viteのみ）ではAPIは動作しません。必ず以下のコマンドで起動してください：
+> ```bash
+> npm run dev:api  # vercel dev が起動する
+> ```
+> 起動時にターミナルに表示される `Ready! Available at http://localhost:XXXX` のポートを使用してください。  
+> ポート3000・3001が使用中の場合、自動で別のポートに切り替わります。
 
 ---
 
@@ -38,19 +48,19 @@ x-api-key: tp_xxxxxxxxxxxxxxxxxx
 
 | メソッド | パス | 説明 |
 |--------|------|------|
-| `GET` | `/api/articles` | 公開記事の一覧を取得 |
-| `GET` | `/api/articles/:id` | 指定IDの公開記事を1件取得 |
+| `GET` | `/api/tinypost/articles` | 公開記事の一覧を取得 |
+| `GET` | `/api/tinypost/articles/:id` | 指定IDの公開記事を1件取得 |
 
 ---
 
-## GET /api/articles
+## GET /api/tinypost/articles
 
 APIキーに紐づくユーザーの公開記事を一覧で返します。作成日時の降順で返却されます。
 
 ### リクエスト
 
 ```
-GET /api/articles
+GET /api/tinypost/articles
 x-api-key: tp_xxxxxxxxxxxxxxxxxx
 ```
 
@@ -87,7 +97,7 @@ x-api-key: tp_xxxxxxxxxxxxxxxxxx
 
 ---
 
-## GET /api/articles/:id
+## GET /api/tinypost/articles/:id
 
 指定した ID の公開記事を1件返します。  
 APIキーのオーナーに属する公開記事のみ取得できます。
@@ -95,7 +105,7 @@ APIキーのオーナーに属する公開記事のみ取得できます。
 ### リクエスト
 
 ```
-GET /api/articles/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+GET /api/tinypost/articles/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 x-api-key: tp_xxxxxxxxxxxxxxxxxx
 ```
 
@@ -185,15 +195,15 @@ x-api-key: tp_xxxxxxxxxxxxxxxxxx
 
 ```bash
 # 記事一覧取得
-curl "https://your-project.vercel.app/api/articles" \
+curl "https://your-project.vercel.app/api/tinypost/articles" \
   -H "x-api-key: tp_xxxxxxxxxx"
 
 # 記事一覧取得（最新3件）
-curl "https://your-project.vercel.app/api/articles?limit=3" \
+curl "https://your-project.vercel.app/api/tinypost/articles?limit=3" \
   -H "x-api-key: tp_xxxxxxxxxx"
 
 # 記事1件取得
-curl "https://your-project.vercel.app/api/articles/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" \
+curl "https://your-project.vercel.app/api/tinypost/articles/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" \
   -H "x-api-key: tp_xxxxxxxxxx"
 ```
 
@@ -204,20 +214,20 @@ const API_KEY = 'tp_xxxxxxxxxx'
 const BASE_URL = 'https://your-project.vercel.app/api'
 
 // 記事一覧取得（全件）
-const listResponse = await fetch(`${BASE_URL}/articles`, {
+const listResponse = await fetch(`${BASE_URL}/tinypost/articles`, {
   headers: { 'x-api-key': API_KEY },
 })
 const { data, count } = await listResponse.json()
 
 // 記事一覧取得（最新5件）
-const limitedResponse = await fetch(`${BASE_URL}/articles?limit=5`, {
+const limitedResponse = await fetch(`${BASE_URL}/tinypost/articles?limit=5`, {
   headers: { 'x-api-key': API_KEY },
 })
 const { data: latest } = await limitedResponse.json()
 
 // 記事1件取得
 const articleId = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-const articleResponse = await fetch(`${BASE_URL}/articles/${articleId}`, {
+const articleResponse = await fetch(`${BASE_URL}/tinypost/articles/${articleId}`, {
   headers: { 'x-api-key': API_KEY },
 })
 const { data: article } = await articleResponse.json()
@@ -230,6 +240,5 @@ const { data: article } = await articleResponse.json()
 | ファイル | 説明 |
 |---------|------|
 | `docs/spec/api_key_management.md` | APIキー管理機能の仕様 |
-| `docs/api_test.md` | ローカル環境でのテスト手順 |
-| `api/articles.js` | 記事一覧エンドポイントの実装 |
-| `api/articles/[id].js` | 記事1件取得エンドポイントの実装 |
+| `api/tinypost/articles/index.js` | 記事一覧エンドポイントの実装 |
+| `api/tinypost/articles/[id].js` | 記事1件取得エンドポイントの実装 |
