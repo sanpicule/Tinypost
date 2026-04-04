@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import KeyIcon from '@mui/icons-material/Key'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -18,6 +19,7 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  Link,
   Skeleton,
   Stack,
   TextField,
@@ -193,7 +195,7 @@ const Account = () => {
         </CardContent>
       </Card>
 
-      {/* API使用方法 */}
+      {/* GitHubリポジトリ */}
       <Stack direction="row" alignItems="center" gap={1} mb={2}>
         <Typography fontWeight={700} fontSize="16px">
           API使用方法
@@ -201,26 +203,38 @@ const Account = () => {
       </Stack>
       <Card>
         <CardContent>
-          <Stack gap={3}>
-            <Box>
-              <Typography fontSize="13px" fontWeight={600} mb={1} color="text.secondary">
-                エンドポイント
-              </Typography>
-              <CodeBlock onCopy={() => handleCopy(getEndpointUrl())}>
-                {'GET ' + getEndpointUrl()}
-              </CodeBlock>
-            </Box>
-            <Box>
-              <Typography fontSize="13px" fontWeight={600} mb={1} color="text.secondary">
-                必須ヘッダー
-              </Typography>
-              <CodeBlock>
-                {`x-api-key: YOUR_API_KEY`}
-              </CodeBlock>
-            </Box>
-            <Alert severity="info" sx={{ borderRadius: '10px', fontSize: '13px' }}>
-              公開中（public = true）の記事のみ取得できます。非公開記事は返却されません。
-            </Alert>
+          <Stack gap={1.5}>
+            <Typography fontSize="13px" color="text.secondary">
+              APIの詳しい使い方やエンドポイントの仕様はGitHubリポジトリをご確認ください。
+            </Typography>
+            <Link
+              href="https://github.com/sanpicule/Tinypost"
+              target="_blank"
+              rel="noopener noreferrer"
+              underline="none"
+            >
+              <Stack
+                direction="row"
+                alignItems="center"
+                gap={1}
+                sx={{
+                  display: 'inline-flex',
+                  px: 2,
+                  py: 1,
+                  borderRadius: '8px',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  color: 'text.primary',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  '&:hover': { bgcolor: 'action.hover' },
+                  transition: 'background-color 0.2s',
+                }}
+              >
+                <OpenInNewIcon fontSize="small" />
+                sanpicule/Tinypost
+              </Stack>
+            </Link>
           </Stack>
         </CardContent>
       </Card>

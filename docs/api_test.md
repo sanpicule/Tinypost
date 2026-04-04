@@ -22,7 +22,9 @@ export default async function handler(req, res) { ... }
 ```
 Tinypost/
 ├── api/
-│   └── articles.js          # サーバーレス関数（GET /api/articles）
+│   ├── articles.js          # サーバーレス関数（GET /api/articles）
+│   └── articles/
+│       └── [id].js          # サーバーレス関数（GET /api/articles/:id）
 ├── src/                     # フロントエンド（React）
 ├── .env.local               # 環境変数（唯一の env ファイル）
 ├── vercel.json              # Vercel の設定
@@ -114,7 +116,8 @@ npm run dev:api
 | 用途 | URL |
 |------|-----|
 | フロントエンド | `http://localhost:3000` |
-| API エンドポイント | `http://localhost:3000/api/articles` |
+| 記事一覧 API | `http://localhost:3000/api/articles` |
+| 記事1件取得 API | `http://localhost:3000/api/articles/:id` |
 
 > `vercel dev` はポート `3000` を使います。`npm run dev`（Vite）の `5173` とは異なります。
 
@@ -166,12 +169,55 @@ curl "http://localhost:3000/api/articles?apikey=tp_xxxxxxxxxx..."
 
 ---
 
+### 記事1件取得 (`GET /api/articles/:id`)
+
+一覧取得レスポンスに含まれる `id`（UUID）を使ってリクエストします。
+
+```bash
+curl "http://localhost:3000/api/articles/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" \
+  -H "x-api-key: tp_ここにAPIキーを貼り付け"
+```
+
+成功時のレスポンス：
+
+```json
+{
+  "data": {
+    "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "title": "記事タイトル",
+    "body": "記事本文",
+    "created_at": "2026-03-30T12:00:00.000Z",
+    "label": 1,
+    "image_url": "https://..."
+  }
+}
+```
+
+存在しない・非公開・別ユーザーの記事を指定した場合：
+
+```json
+{ "error": "Article not found." }
+```
+
+---
+
 ### Insomnia / Postman でのテスト
+
+#### 記事一覧
 
 | 項目 | 値 |
 |------|-----|
 | メソッド | `GET` |
 | URL | `http://localhost:3000/api/articles` |
+| Header キー | `x-api-key` |
+| Header 値 | `tp_xxxxxxxxxx...`（発行したAPIキー） |
+
+#### 記事1件取得
+
+| 項目 | 値 |
+|------|-----|
+| メソッド | `GET` |
+| URL | `http://localhost:3000/api/articles/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
 | Header キー | `x-api-key` |
 | Header 値 | `tp_xxxxxxxxxx...`（発行したAPIキー） |
 
@@ -184,6 +230,7 @@ curl "http://localhost:3000/api/articles?apikey=tp_xxxxxxxxxx..."
 | `401` | `API key is required.` | `x-api-key` ヘッダーが未指定 |
 | `401` | `Invalid API key.` | APIキーが存在しないか無効 |
 | `403` | `This API key has been disabled.` | APIキーが無効化されている |
+| `404` | `Article not found.` | 記事が存在しない・非公開・別ユーザー所有 |
 | `500` | `Server configuration error.` | Vercel に `SUPABASE_URL` または `SUPABASE_SERVICE_ROLE_KEY` が未登録 |
 | `500` | `Failed to fetch articles.` | Supabase への接続エラー |
 
@@ -214,7 +261,9 @@ npx vercel dev --listen 3001
 
 | ファイル | 説明 |
 |---------|------|
-| `api/articles.js` | APIエンドポイントの実装 |
+| `api/articles.js` | 記事一覧 APIエンドポイントの実装 |
+| `api/articles/[id].js` | 記事1件取得 APIエンドポイントの実装 |
 | `.env.local` | 環境変数（唯一の env ファイル） |
 | `vercel.json` | Vercel の設定（SPA リライトルール） |
+| `docs/spec/api.md` | API リファレンス（IF定義） |
 | `supabase/migrations/20260329_create_api_keys.sql` | `api_keys` テーブルのスキーマ |

@@ -20,8 +20,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
+  const { id } = req.query
   const apiKey = req.headers['x-api-key'] ?? req.query.apikey
-  const limitParam = req.query.limit
 
   if (!apiKey) {
     return res.status(401).json({
@@ -30,18 +30,12 @@ export default async function handler(req, res) {
     })
   }
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    return res.status(500).json({ error: 'Server configuration error.' })
+  if (!id) {
+    return res.status(400).json({ error: 'Article ID is required.' })
   }
 
-  // limit バリデーション（指定がある場合のみ）
-  let limit = undefined
-  if (limitParam !== undefined) {
-    const parsed = Number(limitParam)
-    if (!Number.isInteger(parsed) || parsed < 1) {
-      return res.status(400).json({ error: 'limit must be a positive integer.' })
-    }
-    limit = parsed
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    return res.status(500).json({ error: 'Server configuration error.' })
   }
 
   try {
@@ -62,29 +56,20 @@ export default async function handler(req, res) {
       return res.status(403).json({ error: 'This API key has been disabled.' })
     }
 
-    // 公開記事を取得
-    let query = supabase
+    // 指定IDの公開記事を取得（APIキーのオーナーに属するもののみ）
+    const { data: article, error: articleError } = await supabase
       .from('news')
       .select('id, title, body, created_at, label, image_url')
+      .eq('id', id)
       .eq('user_id', keyRecord.user_id)
       .eq('public', true)
-      .order('created_at', { ascending: false })
+      .single()
 
-    if (limit !== undefined) {
-      query = query.limit(limit)
+    if (articleError || !article) {
+      return res.status(404).json({ error: 'Article not found.' })
     }
 
-    const { data: articles, error: articlesError } = await query
-
-    if (articlesError) {
-      console.error('Articles fetch error:', articlesError)
-      return res.status(500).json({ error: 'Failed to fetch articles.' })
-    }
-
-    return res.status(200).json({
-      data: articles,
-      count: articles.length,
-    })
+    return res.status(200).json({ data: article })
   } catch (err) {
     console.error('Unexpected error:', err)
     return res.status(500).json({ error: 'Internal server error.' })
