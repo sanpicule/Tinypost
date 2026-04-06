@@ -157,10 +157,142 @@ x-api-key: tp_xxxxxxxxxxxxxxxxxx
 |-----------|-----|------|
 | `id` | `string (UUID)` | 記事の一意識別子 |
 | `title` | `string` | 記事タイトル |
-| `body` | `string` | 記事本文（Markdown 形式） |
+| `body` | `string` | 記事本文（**HTML形式**のリッチテキスト） |
 | `created_at` | `string (ISO 8601)` | 作成日時（UTC） |
 | `label` | `number \| null` | ラベル識別子 |
 | `image_url` | `string \| null` | サムネイル画像 URL |
+
+> ⚠️ **`body` フィールドについて**
+>
+> `body` フィールドは **HTML形式** のリッチテキストです。  
+> 太字・見出し・コードブロック・リストなどのフォーマットがHTMLタグとして含まれます。  
+> 表示する際は下記の「リッチテキストの表示方法」を参照してください。
+
+---
+
+## リッチテキスト（`body`）の表示方法
+
+`body` は HTML 文字列として返されます。呼び出し側では以下の方法で表示してください。
+
+### 含まれる可能性のある HTML タグ
+
+| タグ | 説明 |
+|------|------|
+| `<p>` | 段落 |
+| `<h1>` `<h2>` `<h3>` | 見出し |
+| `<strong>` | 太字 |
+| `<em>` | 斜体 |
+| `<u>` | 下線 |
+| `<s>` | 打ち消し線 |
+| `<ul>` `<ol>` `<li>` | リスト |
+| `<code>` | インラインコード |
+| `<pre><code>` | コードブロック |
+| `<blockquote>` | 引用 |
+| `<hr>` | 水平線 |
+
+### JavaScript（React）での表示例
+
+```jsx
+// ⚠️ XSS対策として DOMPurify で必ずサニタイズしてください
+import DOMPurify from 'dompurify'
+
+const ArticleBody = ({ body }) => {
+  const clean = DOMPurify.sanitize(body)
+  return (
+    <div
+      className="article-body"
+      dangerouslySetInnerHTML={{ __html: clean }}
+    />
+  )
+}
+```
+
+```bash
+npm install dompurify
+```
+
+### Next.js での表示例
+
+```jsx
+import DOMPurify from 'isomorphic-dompurify'
+
+export default function ArticlePage({ article }) {
+  return (
+    <article>
+      <h1>{article.title}</h1>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(article.body)
+        }}
+      />
+    </article>
+  )
+}
+```
+
+```bash
+npm install isomorphic-dompurify
+```
+
+### 推奨スタイル（CSS）
+
+コードブロック・引用などを適切に表示するために、以下のような CSS を適用してください。
+
+```css
+.article-body {
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.article-body h1 { font-size: 1.75em; font-weight: 700; margin: 0.5em 0; }
+.article-body h2 { font-size: 1.4em;  font-weight: 700; margin: 0.5em 0; }
+.article-body h3 { font-size: 1.15em; font-weight: 700; margin: 0.5em 0; }
+
+.article-body p { margin: 0 0 0.75em 0; }
+.article-body p:last-child { margin-bottom: 0; }
+
+.article-body code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background-color: #f0f0f0;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #c7254e;
+}
+
+.article-body pre {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.article-body pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.article-body blockquote {
+  border-left: 4px solid #90caf9;
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.article-body ul { padding-left: 1.5rem; list-style-type: disc; }
+.article-body ol { padding-left: 1.5rem; }
+.article-body li { margin-bottom: 0.25rem; }
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 1.5rem 0;
+}
+```
 
 ---
 

@@ -19,6 +19,7 @@ import PageHeader from '@/components/PageHeader'
 import useResponsive from '@/hooks/useResponsive'
 
 import useDataForm from '../hooks/useDataForm'
+import RichTextEditor from './RichTextEditor'
 
 const DataForm = () => {
   const { id, control, loading, errors, onSubmit, navigate, handleSubmit } =
@@ -69,21 +70,12 @@ const DataForm = () => {
           control={control}
           rules={{ required: '本文は必須です' }}
           render={({ field }) => (
-            <TextField
-              {...field}
+            <RichTextEditor
+              value={field.value}
+              onChange={field.onChange}
               label="本文"
-              variant="outlined"
-              fullWidth
-              multiline
-              rows={6}
-              margin="normal"
               error={!!errors.body}
               helperText={errors.body?.message}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
-              }}
             />
           )}
         />
