@@ -1,10 +1,22 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
+import { useMemo } from 'react'
 
 import AuthGoogleButton from '@/components/AuthGoogleButton'
 
 const PAGE_BG = 'linear-gradient(135deg, #060a1f 0%, #1a237e 55%, #2d3a8c 100%)'
 
+const isInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || ''
+  return /Line/i.test(ua) || /FBAN|FBAV/i.test(ua) || /Instagram/i.test(ua)
+}
+
 export default function Login() {
+  const isInApp = useMemo(() => isInAppBrowser(), [])
+
+  const handleOpenInBrowser = () => {
+    window.open(window.location.href, '_blank')
+  }
+
   return (
     <Box
       sx={{
@@ -56,7 +68,49 @@ export default function Login() {
         </Typography>
 
         <Stack alignItems="center">
-          <AuthGoogleButton />
+          {isInApp ? (
+            <>
+              <Box
+                sx={{
+                  bgcolor: '#fff7ed',
+                  border: '1px solid #fed7aa',
+                  borderRadius: '12px',
+                  p: 2,
+                  mb: 2,
+                  textAlign: 'left',
+                }}
+              >
+                <Typography sx={{ fontSize: '13px', color: '#9a3412', fontWeight: 600, mb: 0.5 }}>
+                  アプリ内ブラウザでは
+                  <br />
+                  Googleログインが利用できません
+                </Typography>
+                <Typography sx={{ fontSize: '12px', color: '#c2410c', lineHeight: 1.6 }}>
+                  右下の「…」メニューから
+                  <br />
+                  「Safari で開く」を選択してください
+                </Typography>
+              </Box>
+              <Button
+                onClick={handleOpenInBrowser}
+                variant="contained"
+                sx={{
+                  borderRadius: '12px',
+                  textTransform: 'none',
+                  px: 3,
+                  py: 1.3,
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  bgcolor: '#2563EB',
+                  '&:hover': { bgcolor: '#1d4ed8' },
+                }}
+              >
+                外部ブラウザで開く
+              </Button>
+            </>
+          ) : (
+            <AuthGoogleButton />
+          )}
         </Stack>
       </Box>
     </Box>
