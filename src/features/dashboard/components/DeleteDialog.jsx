@@ -1,6 +1,5 @@
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
 import { LoadingButton } from '@mui/lab'
-import { useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -13,7 +12,6 @@ import { useLocation } from 'react-router-dom'
 import useDeleteDialog from '../hooks/useDeleteDialog'
 
 export default function DeleteDialog() {
-  const theme = useTheme()
   const location = useLocation()
   const data = location.state?.data
   const { open, loading, handleClose, handleDelete } = useDeleteDialog()
@@ -55,8 +53,8 @@ export default function DeleteDialog() {
           variant="outlined"
           onClick={handleClose}
           sx={{
-            color: theme.palette.text.default,
-            borderColor: theme.palette.border.default,
+            color: 'text.primary',
+            borderColor: 'divider',
             borderRadius: 2,
           }}
         >

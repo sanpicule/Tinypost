@@ -22,7 +22,6 @@ export const ColorModeProvider = ({ children }) => {
       palette: theme.colorSchemes?.[mode]?.palette || {},
     })
   }, [mode])
-  console.log(themeBase)
 
   return (
     <ColorModeContext.Provider value={{ mode, setMode }}>

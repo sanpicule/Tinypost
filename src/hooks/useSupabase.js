@@ -137,6 +137,53 @@ const useSupabase = () => {
     }
   }
 
+  // --- APIキー管理 ---
+
+  // APIキー一覧取得
+  const fetchApiKeys = async (userId) => {
+    try {
+      const { data, error } = await supabase
+        .from('api_keys')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+      if (error) throw error
+      return { data, error: null }
+    } catch (error) {
+      return { data: null, error }
+    }
+  }
+
+  // APIキー作成
+  const createApiKey = async (userId, name, keyValue) => {
+    try {
+      const { data, error } = await supabase
+        .from('api_keys')
+        .insert({ user_id: userId, name, key_value: keyValue })
+        .select()
+        .single()
+      if (error) throw error
+      return { data, error: null }
+    } catch (error) {
+      return { data: null, error }
+    }
+  }
+
+  // APIキー削除
+  const deleteApiKey = async (id) => {
+    if (!id) return { error: new Error('削除対象のIDが不正です') }
+    try {
+      const { error } = await supabase
+        .from('api_keys')
+        .delete()
+        .eq('id', id)
+      if (error) throw error
+      return { error: null }
+    } catch (error) {
+      return { error }
+    }
+  }
+
   return {
     fetchPosts,
     fetchPost,
@@ -145,6 +192,9 @@ const useSupabase = () => {
     updatePost,
     deletePost,
     updateProfile,
+    fetchApiKeys,
+    createApiKey,
+    deleteApiKey,
   }
 }
 

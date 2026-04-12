@@ -1,6 +1,5 @@
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom'
 import { LoadingButton } from '@mui/lab'
-import { useTheme } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -13,7 +12,6 @@ import useAuth from '@/hooks/useAuth'
 
 export default function LogoutDialog({ open, setOpen }) {
   const { handleLogOut, logoutLoading } = useAuth()
-  const theme = useTheme()
   const handleClose = () => {
     setOpen(false)
   }
@@ -56,8 +54,8 @@ export default function LogoutDialog({ open, setOpen }) {
             variant="outlined"
             onClick={handleClose}
             sx={{
-              color: theme.palette.text.default,
-              borderColor: theme.palette.border.default,
+              color: 'text.primary',
+              borderColor: 'divider',
               borderRadius: 2,
             }}
           >

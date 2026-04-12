@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Claude Code
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,3 +28,6 @@ dist-ssr
 
 # 環境変数ファイル
 .env*
+.vercel
+.env*.local
+.env.local

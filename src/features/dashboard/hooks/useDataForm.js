@@ -57,7 +57,7 @@ const useDataForm = () => {
 
       const postData = {
         title: data.title,
-        body: data.body.replace(/\r\n/g, '\n'), // Windowsの改行を統一
+        body: data.body, // リッチテキスト（HTML形式）をそのまま保存
         public: data.public,
         label: data.label,
         image_url: image_url,

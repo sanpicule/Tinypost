@@ -26,8 +26,8 @@ export default function CustomizedTables() {
 
   return (
     <Stack
-      sx={{ width: mobile ? '100%' : '80%', mt: 4 }}
-      justifyContent={'center'}
+      sx={{ width: mobile ? '100%' : '90%', mt: 4, px: mobile ? 2 : 0 }}
+      justifyContent="center"
       mx="auto"
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -44,13 +44,7 @@ export default function CustomizedTables() {
       <>
         {isFetch && <PostCardSkelton />}
         {!isFetch && posts.length > 0 && (
-          <Box
-            sx={{
-              gap: 2,
-              marginBottom: '80px',
-              marginTop: 1,
-            }}
-          >
+          <Box sx={{ gap: 2, marginBottom: '80px', marginTop: 1 }}>
             {posts.map((post) => (
               <Box key={post.id}>
                 <PostCard posts={posts} post={post} isFetch={isFetch} />

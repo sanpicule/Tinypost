@@ -1,7 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { IconButton, Typography } from '@mui/material'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -32,10 +31,6 @@ const DotsMenu = ({ posts, post }) => {
     handleClose()
     navigate(`./edit/${post.id}`, { state: { data: selectedRow, open: true } })
   }
-  const handlePreviewNavigate = () => {
-    handleClose()
-    navigate(`./preview/${post.id}`)
-  }
 
   return (
     <div>
@@ -63,10 +58,6 @@ const DotsMenu = ({ posts, post }) => {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handlePreviewNavigate} sx={{ gap: 1 }}>
-          <PlayCircleOutlineIcon sx={{ fontSize: '16px' }} />
-          <Typography sx={{ fontSize: '12px' }}>プレビューを見る</Typography>
-        </MenuItem>
         <MenuItem onClick={handleEditNavigate} sx={{ gap: 1 }}>
           <EditIcon sx={{ fontSize: '16px' }} />
           <Typography sx={{ fontSize: '12px' }}>編集する</Typography>

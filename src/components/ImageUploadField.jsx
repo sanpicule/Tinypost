@@ -13,7 +13,9 @@ import PropTypes from 'prop-types'
 import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-const DropZoneWrapper = styled(Paper)(({ theme, isDragActive }) => {
+const DropZoneWrapper = styled(Paper, {
+  shouldForwardProp: (prop) => prop !== 'isDragActive',
+})(({ theme, isDragActive }) => {
   const isDark = theme.palette.mode === 'dark'
 
   return {
