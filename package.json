@@ -14,7 +14,8 @@
     "build:production": "vite build --mode production",
     "build:test": "vite build --mode test",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -45,6 +46,7 @@
     "@eslint/js": "^9.11.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@vite-pwa/assets-generator": "^1.0.2",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/ui": "^2.1.5",
     "eslint": "^8.57.1",
@@ -61,6 +63,7 @@
     "vercel": "^50.37.3",
     "vite": "^5.4.1",
     "vite-jsconfig-paths": "^2.0.1",
+    "vite-plugin-pwa": "^1.2.0",
     "vitest": "^2.1.5"
   }
 }
